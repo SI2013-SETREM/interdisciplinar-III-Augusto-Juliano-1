@@ -57,7 +57,6 @@ namespace SotosWoodwork.Repository
         }
         #endregion
 
-
         #region IRepository Members
         public virtual void Save(object obj)
         {
