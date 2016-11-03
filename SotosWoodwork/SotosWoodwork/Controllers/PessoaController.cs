@@ -23,9 +23,8 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
-        public string GetPessoas()
+        public string FindAll()
         {
-            //IList<Sts_pessoa> listSts_pessoa = new IList<Sts_pessoa>();
             using (ISession session = DataBase.OpenSession())
             {
                 IList<Sts_pessoa> listSts_pessoa = session
@@ -33,8 +32,11 @@ namespace SotosWoodwork.Controllers
                     .List<Sts_pessoa>();
                 return JsonConvert.SerializeObject(listSts_pessoa);
             }
-            
         }
+
+
+
+
 
 
     }

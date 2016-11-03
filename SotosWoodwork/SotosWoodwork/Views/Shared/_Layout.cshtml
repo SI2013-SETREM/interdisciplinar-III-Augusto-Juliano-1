@@ -57,6 +57,9 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand page-scroll">
+                    <img style="margin-top: -30px; margin-left:-20px;" src="~/content/images/logomarca.png">
+                </a>
                 <a class="navbar-brand" href="~/Home">Sotos Woodwork</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -288,49 +291,49 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">Menu</li>
-                    <li class="active">
+                    <li class="active" id="home">
                         <a href="@Url.Action("Index", "Home")">
                             <i class="material-icons">home</i>
                             <span>Início</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="pessoas">
                         <a href="@Url.Action("Index", "Pessoa")">
                             <i class="material-icons">people</i>
                             <span>Pessoas</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="produtos">
                         <a href="#">
                             <i class="material-icons">shopping_cart</i>
                             <span>Produtos</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="ficha">
                         <a href="#">
                             <i class="material-icons">content_paste</i>
                             <span>Ficha Técnica</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="maquinas">
                         <a href="#">
                             <i class="material-icons">build</i>
                             <span>Máquinas</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="contas">
                         <a href="#">
                             <i class="material-icons">account_balance_wallet</i>
                             <span>Contas</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="orcamento">
                         <a href="#">
                             <i class="material-icons">assignment</i>
                             <span>Orçamento</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="ordemproducao">
                         <a href="#">
                             <i class="material-icons">gavel</i>
                             <span>Ordem de Produção</span>
@@ -381,25 +384,6 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    <li class="header">LABELS</li>
-                    <li>
-                        <a href="javascript:void(0);">
-                            <i class="material-icons col-red">donut_large</i>
-                            <span>Important</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);">
-                            <i class="material-icons col-amber">donut_large</i>
-                            <span>Warning</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);">
-                            <i class="material-icons col-light-blue">donut_large</i>
-                            <span>Information</span>
-                        </a>
                     </li>
                 </ul>
             </div>
@@ -562,9 +546,6 @@
     </section>
     <section class="content">
         <div class="container-fluid">
-            <div class="block-header">
-                <h2>DASHBOARD</h2>
-            </div>
             @RenderBody()
         </div>
     </section>
