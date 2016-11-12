@@ -217,6 +217,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\controller\sotosApp.js" />
     <Content Include="Scripts\js\admin.js" />
     <Content Include="Scripts\js\demo.js" />
     <Content Include="Scripts\js\helpers.js" />
@@ -254,6 +255,7 @@
     <Content Include="Scripts\js\pages\widgets\infobox\infobox-4.js" />
     <Content Include="Scripts\js\pages\widgets\infobox\infobox-5.js" />
     <Content Include="Scripts\js\script.js" />
+    <Content Include="Scripts\plugins\angular\angular.min.js" />
     <Content Include="Scripts\plugins\animate-css\animate.css" />
     <Content Include="Scripts\plugins\animate-css\animate.min.css" />
     <Content Include="Scripts\plugins\autosize\autosize.js" />
@@ -3432,8 +3434,17 @@
     </Compile>
     <Compile Include="Models\Sts_cidade.cs" />
     <Compile Include="Models\Sts_grupo.cs" />
+    <Compile Include="Models\Sts_log.cs" />
+    <Compile Include="Models\Sts_maquina.cs" />
+    <Compile Include="Models\Sts_ordemcompra.cs" />
+    <Compile Include="Models\Sts_ordemcompraprodutos.cs" />
     <Compile Include="Models\Sts_pessoa.cs" />
+    <Compile Include="Models\Sts_processosprodutivos.cs" />
+    <Compile Include="Models\Sts_produto.cs" />
+    <Compile Include="Models\Sts_produtoprocessos.cs" />
     <Compile Include="Models\Sts_setor.cs" />
+    <Compile Include="Models\Sts_setorpessoas.cs" />
+    <Compile Include="Models\Sts_unidademedida.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DataBase.cs" />
     <Compile Include="Repository\IRepository.cs" />

@@ -12,7 +12,6 @@ namespace SotosWoodwork.Controllers
 {
     public class PessoaController : Controller
     {
-        // GET: Pessoa
         public ActionResult Index()
         {
             return View();
@@ -23,6 +22,7 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
+        [HttpGet]
         public string FindAll()
         {
             using (ISession session = DataBase.OpenSession())
@@ -34,10 +34,14 @@ namespace SotosWoodwork.Controllers
             }
         }
 
-
-
-
-
-
+        [HttpGet]
+        public string GetById(int id)
+        {
+            using (ISession session = DataBase.OpenSession())
+            {
+                Sts_pessoa sts_pessoa = session.Get<Sts_pessoa>(id);
+                return JsonConvert.SerializeObject(sts_pessoa);
+            }
+        }
     }
 }

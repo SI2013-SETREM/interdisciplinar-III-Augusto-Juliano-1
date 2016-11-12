@@ -1,28 +1,30 @@
-﻿@using System.Web.Optimization
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Sotos Woodwork | @ViewBag.Title</title>
-    @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/custom")
-    @Styles.Render("~/Content/themes")
-
-    <!-- Opcionais -->
-    @Styles.Render("~/Content/waves")
-    @Styles.Render("~/Content/animate")
-    @Styles.Render("~/Content/preloader")
-    @Styles.Render("~/Content/morris")
-    @Styles.Render("~/Content/dataTable")
-
+    <title>Sotos Woodwork | Index</title>
+    
     <!-- Favicon-->
-    <!--<link rel="icon" href="~/favicon.ico" type="image/x-icon">-->
+    <link rel="icon" href="~/favicon.ico"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="~/Scripts/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="~/Scripts/plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="~/Scripts/plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Preloader Css -->
+    <link href="~/Scripts/plugins/material-design-preloader/md-preloader.css" rel="stylesheet" />
+    <!-- Custom Css -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="~/Content/css/themes/all-themes.css" rel="stylesheet" />
+
 </head>
 <body class="theme-yellow">
     <!-- Page Loader -->
@@ -58,9 +60,8 @@
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand page-scroll">
-                    <img style="margin-top: -30px; margin-left:-20px;" src="~/content/images/logomarca.png">
+                    <img style="margin-top: -20px;height: 60px;" src="~/content/images/logomarca.png">
                 </a>
-                <a class="navbar-brand" href="~/Home">Sotos Woodwork</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -297,6 +298,15 @@
                             <span>Início</span>
                         </a>
                     </li>
+                    <!--
+                        
+                        <li ng-click="activetab = 'dashboard';" ng-class="{
+                                'active'
+                                        : activetab === 'dashboard' || activetab === undefined}">
+                            <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Painel de Produção</a>
+                        </li>
+                    
+                        -->
                     <li id="pessoas">
                         <a href="@Url.Action("Index", "Pessoa")">
                             <i class="material-icons">people</i>
@@ -394,7 +404,7 @@
                     &copy; @DateTime.Now.Year <a href="javascript:void(0);">Sotos Woodwork</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 1.0
+                    <b>Versão: </b> 1.0
                 </div>
             </div>
             <!-- #Footer -->
@@ -545,25 +555,25 @@
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
-        <div class="container-fluid">
-            @RenderBody()
+        <div id="content" class="container-fluid">
+            
         </div>
     </section>
 
-    <!-- jQuery -->
-    @Scripts.Render("~/bundles/jquery")
-    <!-- bootstrap -->
-    @Scripts.Render("~/bundles/bootstrap")
-    <!-- page -->
-    @Scripts.Render("~/bundles/page")
-
-    <!-- plugins -->
-    @Scripts.Render("~/bundles/plugins")
-    <!-- flot-charts -->
-    @Scripts.Render("~/bundles/flot-charts")
-    <!-- dataTable -->
-    @Scripts.Render("~/bundles/dataTable")
-
-    @RenderSection("scripts", false)
+    <!-- Jquery Core Js -->
+    <script src="~/Scripts/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="~/Scripts/plugins/bootstrap/js/bootstrap.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="~/Scripts/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Slimscroll Plugin Js -->
+    <script src="~/Scripts/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="~/Scripts/plugins/node-waves/waves.js"></script>
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="~/Scripts/plugins/jquery-countto/jquery.countTo.js"></script>
+    <!-- Custom Js -->
+    <script src="~/Scripts/js/admin.js"></script>
+    <script src="~/Scripts/js/pages/index.js"></script>
 </body>
 </html>

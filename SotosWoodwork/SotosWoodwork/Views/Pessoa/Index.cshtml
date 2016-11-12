@@ -1,8 +1,13 @@
-﻿@using System.Web.Optimization;
-@{
-    ViewBag.Title = "Pessoa";
-}
-<!-- Exportable Table -->
+﻿<!--<a href="#" class="btn btn-primary btn-lg btn-add" ng-click="requestPage('Pessoa/Create', 'pessoas')">+</a>
+
+<div ng-show="http.pendingRequests.length > 0" class="showbox">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="4" stroke-miterlimit="10" />
+        </svg>
+    </div>
+</div>-->
+
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -10,21 +15,81 @@
                 <h2>
                     Listagem de Pessoas
                 </h2>
-                <ul class="header-dropdown m-r--5">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);">Action</a></li>
-                            <li><a href="javascript:void(0);">Another action</a></li>
-                            <li><a href="javascript:void(0);">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
-            <div class="body">
-                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+            <div class="body" ng-controller="pessoaController">
+                <div class="row form-horizontal">
+                    <div class="col-lg-11">
+                        <div class="input-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" placeholder="Pesquisar">
+                            </div>
+                            <span class="input-group-addon">
+                                <i class="material-icons">send</i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-11 no-margin">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Pesquise pela Descrição" ng-model="search">
+                            <div class="input-group-addon">
+                                <i class="material-icons">search</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 text-right">
+                        <div class="btn btn-primary" ng-click="loadPessoasList()">
+                            <i class="material-icons">refresh</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <a href="#" ng-click="sortType = 'Pes_nomefantasia';sortReverse = !sortReverse">
+                                                Nome
+                                                <i ng-show="sortType === 'Pes_nomefantasia' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pes_nomefantasia' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="#" ng-click="sortType = 'Pes_cpfcnpj';sortReverse = !sortReverse">
+                                                CPF/CNPJ
+                                                <i ng-show="sortType === 'Pes_cpfcnpj' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pes_cpfcnpj' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th class="col-button-header">Editar</th>
+                                        <th class="col-button-header">Excluir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="pessoasList.length === 0 && http.pendingRequests.length == 0">
+                                        <td colspan="1000">Nenhum registro encontrado :(</td>
+                                    </tr>
+                                    <tr ng-repeat="pessoa in pessoasList| orderBy:sortType:sortReverse | filter:search">
+                                        <td>{{pessoa.Pes_nomefantasia}}</td>
+                                        <td>{{pessoa.Pes_cpfcnpj}}</td>
+                                        <td class="text-center">
+                                            <a href="#" ng-click="requestPage('Pessoa/Edit', 'pessoas', pessoa);">
+                                                <i class="material-icons col-blue">create</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" ng-click="delete(pessoa);">
+                                                <i class="material-icons col-pink">remove_circle</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--<table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -32,9 +97,43 @@
                             <th>Grupo</th>
                             <th>Cidade</th>
                             <th>Status</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
                         </tr>
                     </thead>
-                    <!--<tfoot>
+                    <tbody>
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    Html.DisplayFor(x => item.Pes_nomefantasia)
+                                </td>
+                                <td>
+                                    Html.DisplayFor(x => item.Pes_cpfcnpj)
+                                </td>
+                                <td>
+                                    Html.DisplayFor(x => item.Sts_grupo.Grp_descricao)
+                                </td>
+                                <td>
+                                    Html.DisplayFor(x => item.Sts_cidade.Cid_descricao)
+                                </td>
+                                <td>
+                                    Html.DisplayFor(x => item.Pes_situacao)
+                                </td>
+                                <td class="text-center">
+                                    <a href="Url.Action("Index", "Pessoa")">
+                                        <i class="material-icons col-blue">create</i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="Url.Action("Index", "Pessoa")">
+                                        <i class="material-icons col-pink">remove_circle</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
                         <tr>
                             <th>Nome</th>
                             <th>CPF/CNPJ</th>
@@ -42,13 +141,13 @@
                             <th>Cidade</th>
                             <th>Status</th>
                         </tr>
-                    </tfoot>-->
-                </table>
+                    </tfoot>
+                </table>-->
             </div>
         </div>
     </div>
 </div>
-
+<!--
 <script type="text/javascript">
     window.onload = function () {
         $(".menu .list li ").not(".header").removeClass("active");
@@ -61,10 +160,10 @@
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ],
             language: {
-                url: "@Url.Content("~/Scripts/datatable-pt-br.json")"
+                url: "Url.Content("~/Scripts/datatable-pt-br.json")"
             },
             ajax: {
-                url: "@Url.Action("GetPessoas", "Pessoa")",
+                url: "Url.Action("FindAll", "Pessoa")",
                 dataSrc: ""
             },
             columns: [
@@ -77,12 +176,26 @@
             columnDefs: [
                 {
                     render: function (data, type, row) {
-                        return (data == true) ? '<i class="material-icons col-teal">check_circle</i>' : '<i class="material-icons col-pink">remove_circle</i>';
+                        return (data == true) || (data == 'true') ? '<i class="material-icons col-teal">check_circle</i>' : '<i class="material-icons col-pink">remove_circle</i>';
                     },
                     className: "text-center",
                     targets: 4
+                },
+
+                {
+                    targets: 5,
+                    data: null,
+                    defaultContent: '<a href="Url.Action("Index", "Pessoa")"><i class="material-icons col-blue">create</i></a>',
+                    className: "text-center",
+                },
+                {
+                    targets: 6,
+                    render: function (data, type, row) {
+                        return '<a href="Url.Action("Index", "Pessoa")"><i class="material-icons col-pink">remove_circle</i></a>';
+                        },
+                    className: "text-center",
                 }
             ]
         });
     }
-</script>
+</script>-->
