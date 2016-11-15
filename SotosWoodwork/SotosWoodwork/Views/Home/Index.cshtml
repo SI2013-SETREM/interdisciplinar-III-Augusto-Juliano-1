@@ -8,36 +8,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Sotos Woodwork | Index</title>
-
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
     <link href="~/Scripts/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
     <!-- Waves Effect Css -->
     <link href="~/Scripts/plugins/node-waves/waves.css" rel="stylesheet" />
+
     <!-- Animation Css -->
     <link href="~/Scripts/plugins/animate-css/animate.css" rel="stylesheet" />
+
     <!-- Preloader Css -->
     <link href="~/Scripts/plugins/material-design-preloader/md-preloader.css" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <link href="~/Scripts/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
     <!-- Custom Css -->
     <link href="~/Content/css/style.css" rel="stylesheet">
+
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="~/Content/css/themes/all-themes.css" rel="stylesheet" />
 
 </head>
-<body class="theme-yellow">
-    <div ng-app="sotosApp" ng-controller="sotosController">
+<body class="theme-yellow" ng-app="sotosApp" >
+    <div ng-controller="sotosController">
         <!-- Page Loader -->
-        <div class="page-loader-wrapper">
+        <div class="page-loader-wrapper" ng-show="http.pendingRequests.length > 0">
             <div class="loader">
                 <div class="md-preloader pl-size-md">
                     <svg viewbox="0 0 75 75">
                         <circle cx="37.5" cy="37.5" r="33.5" class="pl-red" stroke-width="4" />
                     </svg>
                 </div>
-                <p>Please wait...</p>
+                <p>Aguarde...</p>
             </div>
         </div>
         <!-- #END# Page Loader -->
@@ -294,49 +302,49 @@
                 <div class="menu">
                     <ul class="list">
                         <li class="header">Menu</li>
-                        <li ng-click="activetab = 'home';" ng-class="{'active' : activetab === 'home' || activetab === undefined}" id="home">
+                        <li>
                             <a href="#">
                                 <i class="material-icons">home</i>
                                 <span>Início</span>
                             </a>
                         </li>
-                        <li ng-click="requestPage('Pessoa'); activetab = 'pessoas';" ng-class="{'active' : activetab === 'pessoas'}" id="pessoas">
-                            <a href="#">
+                        <li>
+                            <a href="#Pessoa">
                                 <i class="material-icons">people</i>
                                 <span>Pessoas</span>
                             </a>
                         </li>
-                        <li ng-click="requestPage('Produto'); activetab = 'produtos';" ng-class="{'active' : activetab === 'produtos'}" id="produtos">
+                        <li>
                             <a href="#">
                                 <i class="material-icons">shopping_cart</i>
                                 <span>Produtos</span>
                             </a>
                         </li>
-                        <li ng-click="requestPage('Ficha'); activetab = 'ficha';" ng-class="{'active' : activetab === 'ficha'}" id="ficha">
+                        <li>
                             <a href="#">
                                 <i class="material-icons">content_paste</i>
                                 <span>Ficha Técnica</span>
                             </a>
                         </li>
-                        <li ng-click="requestPage('Maquina'); activetab = 'maquinas';" ng-class="{'active' : activetab === 'maquinas'}" id="maquinas">
+                        <li>
                             <a href="#">
                                 <i class="material-icons">build</i>
                                 <span>Máquinas</span>
                             </a>
                         </li>
-                        <li ng-click="requestPage('Conta'); activetab = 'contas';" ng-class="{'active' : activetab === 'contas'}" id="contas">
+                        <li>
                             <a href="#">
                                 <i class="material-icons">account_balance_wallet</i>
                                 <span>Contas</span>
                             </a>
                         </li>
-                        <li ng-click="requestPage('Orcamento'); activetab = 'orcamento';" ng-class="{'active' : activetab === 'orcamento'}" id="orcamento">
+                        <li>
                             <a href="#">
                                 <i class="material-icons">assignment</i>
                                 <span>Orçamento</span>
                             </a>
                         </li>
-                        <li ng-click="requestPage('OrdemProducao'); activetab = 'ordemproducao';" ng-class="{'active' : activetab === 'ordemproducao'}" id="ordemproducao">
+                        <li>
                             <a href="#">
                                 <i class="material-icons">gavel</i>
                                 <span>Ordem de Produção</span>
@@ -548,36 +556,62 @@
             <!-- #END# Right Sidebar -->
         </section>
         <section class="content">
-            <div id="content" class="container-fluid">
-
+            <div ng-view id="content" class="container-fluid">
+                
             </div>
         </section>
     </div>
 
     <!-- Jquery Core Js -->
     <script src="~/Scripts/plugins/jquery/jquery.min.js"></script>
-    <!-- Angular Core Js -->
-    <script src="~/Scripts/plugins/angular/angular.min.js"></script>
+
     <!-- Bootstrap Core Js -->
     <script src="~/Scripts/plugins/bootstrap/js/bootstrap.js"></script>
-    <!-- Select Plugin Js -->
-    <script src="~/Scripts/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Angular Core Js -->
+    <script src="~/Scripts/plugins/angular/angular.js"></script>
+
+    <!-- Angular Route Core Js -->
+    <script src="~/Scripts/plugins/angular-route/angular-route.min.js"></script>
+
+    <!-- Select Plugin Js 
+    <script src="~/Scripts/plugins/bootstrap-select/js/bootstrap-select.js"></script>-->
+    
     <!-- Slimscroll Plugin Js -->
     <script src="~/Scripts/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Bootstrap Colorpicker Js -->
+    <script src="~/Scripts/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+
+    <!-- Dropzone Plugin Js -->
+    <script src="~/Scripts/plugins/dropzone/dropzone.js"></script>
+
+    <!-- Input Mask Plugin Js -->
+    <script src="~/Scripts/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+    <!-- Multi Select Plugin Js -->
+    <script src="~/Scripts/plugins/multi-select/js/jquery.multi-select.js"></script>
+
+    <!-- Jquery Spinner Plugin Js -->
+    <script src="~/Scripts/plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+    <!-- Bootstrap Tags Input Plugin Js -->
+    <script src="~/Scripts/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    
     <!-- Waves Effect Plugin Js -->
     <script src="~/Scripts/plugins/node-waves/waves.js"></script>
-    <!-- Jquery CountTo Plugin Js -->
-    <script src="~/Scripts/plugins/jquery-countto/jquery.countTo.js"></script>
-    <!-- Custom Js -->
-    <script src="~/Scripts/js/admin.js"></script>
-    <!-- Angular App -->
-    <script src="~/Scripts/controller/sotosApp.js"></script>
 
+    <!-- Bootbox Core Js -->
+    <script src="~/Scripts/plugins/bootbox/bootbox.min.js"></script>
+
+    <!-- Sotos App Js -->
+    <script src="~/Scripts/controller/sotosApp.js"></script>
     
     <!-- Custom Js -->
     <script src="~/Scripts/js/admin.js"></script>
-    <script src="~/Scripts/js/pages/forms/basic-form-elements.js"></script>
+
     <!-- Demo Js -->
     <script src="~/Scripts/js/demo.js"></script>
+
 </body>
 </html>

@@ -255,11 +255,14 @@
     <Content Include="Scripts\js\pages\widgets\infobox\infobox-4.js" />
     <Content Include="Scripts\js\pages\widgets\infobox\infobox-5.js" />
     <Content Include="Scripts\js\script.js" />
+    <Content Include="Scripts\plugins\angular-route\angular-route.min.js" />
+    <Content Include="Scripts\plugins\angular\angular.js" />
     <Content Include="Scripts\plugins\angular\angular.min.js" />
     <Content Include="Scripts\plugins\animate-css\animate.css" />
     <Content Include="Scripts\plugins\animate-css\animate.min.css" />
     <Content Include="Scripts\plugins\autosize\autosize.js" />
     <Content Include="Scripts\plugins\autosize\autosize.min.js" />
+    <Content Include="Scripts\plugins\bootbox\bootbox.min.js" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
@@ -3427,6 +3430,8 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CidadeController.cs" />
+    <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Global.asax.cs">
@@ -3459,8 +3464,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Views\Pessoa\Index.cshtml" />
-    <Content Include="Views\Pessoa\Form.cshtml" />
+    <Content Include="Views\Pessoa\PessoaList.cshtml" />
     <Content Include="Scripts\datatable-pt-br.json" />
     <Content Include="Content\scss\browser-support\_ie10.scss" />
     <Content Include="Content\scss\browser-support\_ie11.scss" />
@@ -3655,6 +3659,8 @@
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Views\Pessoa\PessoaForm.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3664,6 +3670,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Cidade\" />
+    <Folder Include="Views\Grupo\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

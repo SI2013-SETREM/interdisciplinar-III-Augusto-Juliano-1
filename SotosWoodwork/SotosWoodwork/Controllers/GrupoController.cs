@@ -1,25 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SotosWoodwork.Models;
-using NHibernate;
 using SotosWoodwork.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace SotosWoodwork.Controllers
 {
-    public class PessoaController : Controller
+    public class GrupoController : Controller
     {
-        public ActionResult Index()
+        public ActionResult GrupoList()
         {
             return View();
         }
 
-        public ActionResult PessoaList()
-        {
-            return View();
-        }
-
-        public ActionResult PessoaForm()
+        public ActionResult GrupoForm()
         {
             return View();
         }
@@ -29,18 +26,18 @@ namespace SotosWoodwork.Controllers
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>();
-                return JsonConvert.SerializeObject(listSts_pessoa);
+                IList<Sts_grupo> listSts_grupo = repository.ToList<Sts_grupo>();
+                return JsonConvert.SerializeObject(listSts_grupo);
             }
         }
-        
+
         [HttpGet]
         public string GetById(int id)
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                Sts_pessoa sts_pessoa = (Sts_pessoa)repository.GetById(typeof(Sts_pessoa), id);
-                return JsonConvert.SerializeObject(sts_pessoa);
+                Sts_grupo Sts_grupo = (Sts_grupo)repository.GetById(typeof(Sts_grupo), id);
+                return JsonConvert.SerializeObject(Sts_grupo);
             }
         }
 
@@ -51,10 +48,10 @@ namespace SotosWoodwork.Controllers
                 try
                 {
                     repository.BeginTransaction();
-                    Sts_pessoa sts_pessoa = (Sts_pessoa)repository.GetById(typeof(Sts_pessoa), id);
-                    repository.Delete(sts_pessoa);
+                    Sts_grupo Sts_grupo = (Sts_grupo)repository.GetById(typeof(Sts_grupo), id);
+                    repository.Delete(Sts_grupo);
 
-                    return JsonConvert.SerializeObject(sts_pessoa);
+                    return JsonConvert.SerializeObject(Sts_grupo);
                 }
                 catch
                 {
@@ -72,10 +69,10 @@ namespace SotosWoodwork.Controllers
                 try
                 {
                     repository.BeginTransaction();
-                    Sts_pessoa sts_pessoa = JsonConvert.DeserializeObject<Sts_pessoa>(json);
-                    repository.Save(sts_pessoa);
+                    Sts_grupo Sts_grupo = JsonConvert.DeserializeObject<Sts_grupo>(json);
+                    repository.Save(Sts_grupo);
 
-                    return JsonConvert.SerializeObject(sts_pessoa);
+                    return JsonConvert.SerializeObject(Sts_grupo);
                 }
                 catch
                 {
@@ -85,7 +82,5 @@ namespace SotosWoodwork.Controllers
                 }
             }
         }
-
-
     }
 }

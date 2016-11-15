@@ -1,17 +1,29 @@
-﻿var app = angular.module('sotosApp', []);
+﻿var app = angular.module('sotosApp', ['ngRoute']);
+
+app.config(function ($routeProvider, $locationProvider) {
+    $routeProvider
+    .when('/', {
+        templateUrl: '/Home/Dashboard',
+        controller: 'sotosController',
+    })
+    .when('/Pessoa', {
+        templateUrl: '/Pessoa/PessoaList',
+        controller: 'pessoaController',
+    })
+    .when('/EditarPessoa', {
+        templateUrl: '/Pessoa/PessoaForm',
+        controller: 'pessoaController',
+    })
+    .when('/AdicionarPessoa', {
+        templateUrl: '/Pessoa/PessoaForm',
+        controller: 'pessoaController',
+    })
+    .otherwise({ redirectTo: '/' });
+});
+
 
 app.controller("sotosController", function ($scope, $compile, $http) {
-    $scope.requestPage = function (page, activeTab, model) {
-        $("#content").load(page, function () {
-            if (model) {
-                $scope.model = model;
-            } else {
-                $scope.model = {};
-            }
-            $scope.$parent.activetab = activeTab;
-            $compile($("#content"))($scope);
-        });
-    };
+
 }).directive('convertToNumber', function () {
     return {
         require: 'ngModel',
@@ -26,28 +38,53 @@ app.controller("sotosController", function ($scope, $compile, $http) {
     };
 });
 
-app.controller("pessoaController", function ($scope, $http) {
+app.controller("pessoaController", function ($scope, $http, $routeParams, $location) {
     $scope.pessoasList = [];
-    $scope.sortType = "pes_nomefantasia";
+    $scope.cidadesList = [];
+    $scope.gruposList = [];
+    $scope.sortType = "Pes_nomefantasia";
     $scope.sortReverse = false;
     $scope.search = "";
-    $scope.pessoa = $scope.$parent.model;
     $scope.http = $http;
+    $scope.Sts_pessoa = {};
+    $scope.Pes_tipo = [{ valor: "F", descricao: "Física" }, { valor: "J", descricao: "Jurídica" }];
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Pessoa/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_pessoa = response.data;
+        });
+    }
 
     $scope.loadPessoasList = function () {
-        $http.get("Pessoa/FindAll", { method: "GET" }).then(function (response) {
+        $http.get(window.location.origin + "/Pessoa/FindAll", { method: "GET" }).then(function (response) {
             $scope.pessoasList = response.data;
         });
     };
 
-    $scope.delete = function (pessoa) {
+    $scope.loadCidadesList = function () {
+        $http.get(window.location.origin + "/Cidade/FindAll", { method: "GET" }).then(function (response) {
+            $scope.cidadesList = response.data;
+            debugger;
+            if (!$scope.Sts_pessoa.Pes_codigo)
+                $scope.Sts_pessoa.Sts_cidade = $scope.cidadesList[0];
+        });
+    };
+
+    $scope.loadGruposList = function () {
+        $http.get(window.location.origin + "/Grupo/FindAll", { method: "GET" }).then(function (response) {
+            $scope.cidadesList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_pessoa) {
         bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+
             if (ok) {
                 $http({
                     method: "GET",
-                    url: "Pessoa/Delete",
+                    url: window.location.origin + "/Pessoa/Delete",
                     params: {
-                        id: pessoa.pes_codigo
+                        id: Sts_pessoa.Pes_codigo
                     }
                 }).then(function (response) {
                     bootbox.alert("Registro excluído com Sucesso!", function () {
@@ -58,41 +95,21 @@ app.controller("pessoaController", function ($scope, $http) {
         });
     };
 
-    $scope.save = function (pessoa) {
-        if (pessoa.pes_codigo === undefined) {
-            $scope.insert(pessoa);
-        } else {
-            $scope.update(pessoa);
-        }
-    };
-
-    $scope.insert = function (pessoa) {
+    $scope.save = function (Sts_pessoa) {
         $http({
             method: "GET",
-            url: "Pessoa/Insert",
+            url: window.location.origin + "/Pessoa/Save",
             params: {
-                json: pessoa
+                json: Sts_pessoa
             }
         }).then(function (response) {
-            bootbox.alert("Registro inserido com Sucesso!", function () {
-                $scope.requestPage('Pessoa');
-            });
-        });
-    };
-
-    $scope.update = function (pessoa) {
-        $http({
-            method: "GET",
-            url: "Pessoa/Update",
-            params: {
-                json: pessoa
-            }
-        }).then(function (response) {
-            bootbox.alert("Registro alterado com Sucesso!", function () {
-                $scope.requestPage('Pessoa');
+            bootbox.alert("Registro " + (Sts_pessoa.Pes_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Pessoa';
             });
         });
     };
 
     $scope.loadPessoasList();
+    $scope.loadCidadesList();
+    $scope.loadGruposList();
 });

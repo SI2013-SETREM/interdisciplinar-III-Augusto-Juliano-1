@@ -1,6 +1,7 @@
 ﻿using NHibernate;
 using NHibernate.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SotosWoodwork.Repository
@@ -70,12 +71,12 @@ namespace SotosWoodwork.Repository
 
         public virtual object GetById(Type objType, object objId)
         {
-            return _session.Load(objType, objId);
+            return _session.Get(objType, objId);
         }
 
-        public virtual IQueryable<T> ToList<T>()
+        public virtual IList<T> ToList<T>()
         {
-            return (from entity in _session.Query<T>() select entity);
+            return (from entity in _session.Query<T>() select entity).ToList<T>();
         }
         #endregion
 

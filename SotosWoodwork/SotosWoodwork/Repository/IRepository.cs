@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SotosWoodwork.Repository
@@ -8,6 +9,6 @@ namespace SotosWoodwork.Repository
         void Save(object obj);
         void Delete(object obj);
         object GetById(Type objType, object objId);
-        IQueryable<T> ToList<T>();
+        IList<T> ToList<T>();
     }
 }
