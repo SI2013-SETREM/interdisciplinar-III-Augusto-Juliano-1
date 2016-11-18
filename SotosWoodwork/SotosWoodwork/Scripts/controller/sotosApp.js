@@ -64,7 +64,6 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     $scope.loadCidadesList = function () {
         $http.get(window.location.origin + "/Cidade/FindAll", { method: "GET" }).then(function (response) {
             $scope.cidadesList = response.data;
-            debugger;
             if (!$scope.Sts_pessoa.Pes_codigo)
                 $scope.Sts_pessoa.Sts_cidade = $scope.cidadesList[0];
         });

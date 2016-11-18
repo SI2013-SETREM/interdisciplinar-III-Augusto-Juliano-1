@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Sotos Woodwork | Index</title>
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
@@ -35,7 +35,7 @@
     <link href="~/Content/css/themes/all-themes.css" rel="stylesheet" />
 
 </head>
-<body class="theme-yellow" ng-app="sotosApp" >
+<body class="theme-yellow" ng-app="sotosApp">
     <div ng-controller="sotosController">
         <!-- Page Loader -->
         <div class="page-loader-wrapper" ng-show="http.pendingRequests.length > 0">
@@ -111,43 +111,43 @@
                 <div class="menu">
                     <ul class="list">
                         <li class="header">Menu</li>
-                        <li>
+                        <li ng-click="activetab = 'index';" ng-class="{'active' : activetab === 'index' || activetab === undefined}">
                             <a href="#">
                                 <i class="material-icons">home</i>
                                 <span>Início</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#Cliente">
+                        <li ng-click="activetab = 'clientes';" ng-class="{'active' : activetab === 'clientes'}">
+                            <a href="#Pessoa">
                                 <i class="material-icons">assignment_ind</i>
                                 <span>Clientes</span>
                             </a>
                         </li>
-                        <li>
+                        <li ng-click="activetab = 'fornecedores';" ng-class="{'active' : activetab === 'fornecedores'}">
                             <a href="#Fornecedor">
                                 <i class="material-icons">people</i>
                                 <span>Fornecedores</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
+                        <li ng-click="activetab = 'produtos';" ng-class="{'active' : activetab === 'produtos'}">
+                            <a href="#Produto">
                                 <i class="material-icons">event_seat</i>
                                 <span>Produtos</span>
                             </a>
                         </li>
-                        <li>
+                        <li ng-click="activetab = 'materiaprima';" ng-class="{'active' : activetab === 'materiaprima'}">
                             <a href="#">
                                 <i class="material-icons">rowing</i>
                                 <span>Matérias Primas</span>
                             </a>
                         </li>
-                        <li>
+                        <li ng-click="activetab = 'orcamento';" ng-class="{'active' : activetab === 'orcamento'}">
                             <a href="#">
                                 <i class="material-icons">assignment</i>
                                 <span>Orçamento de Venda</span>
                             </a>
                         </li>
-                        <li>
+                        <li ng-click="activetab = 'ordemproducao';" ng-class="{'active' : activetab === 'ordemproducao'}">
                             <a href="#">
                                 <i class="material-icons">gavel</i>
                                 <span>Ordem de Produção</span>
@@ -159,15 +159,19 @@
                                 <span>Produção</span>
                             </a>
                             <ul class="ml-menu">
-                                <li>
+                                <li ng-click="activetab = 'funcionarios';" ng-class="{'active' : activetab === 'funcionarios'}">
                                     <a href="#">
                                         <i class="material-icons">account_box</i>
                                         <span>Funcionários</span>
                                     </a>
+                                </li>
+                                <li ng-click="activetab = 'maquinas';" ng-class="{'active' : activetab === 'maquinas'}">
                                     <a href="#">
                                         <i class="material-icons">settings_applications</i>
                                         <span>Máquinas</span>
                                     </a>
+                                </li>
+                                <li ng-click="activetab = 'setores';" ng-class="{'active' : activetab === 'setores'}">
                                     <a href="#">
                                         <i class="material-icons">account_balance</i>
                                         <span>Setores</span>
@@ -193,7 +197,7 @@
         </section>
         <section class="content">
             <div ng-view id="content" class="container-fluid">
-                
+
             </div>
         </section>
     </div>
@@ -210,9 +214,8 @@
     <!-- Angular Route Core Js -->
     <script src="~/Scripts/plugins/angular-route/angular-route.min.js"></script>
 
-    <!-- Select Plugin Js 
+    <!-- Select Plugin Js
     <script src="~/Scripts/plugins/bootstrap-select/js/bootstrap-select.js"></script>-->
-    
     <!-- Slimscroll Plugin Js -->
     <script src="~/Scripts/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
@@ -233,7 +236,7 @@
 
     <!-- Bootstrap Tags Input Plugin Js -->
     <script src="~/Scripts/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-    
+
     <!-- Waves Effect Plugin Js -->
     <script src="~/Scripts/plugins/node-waves/waves.js"></script>
 
@@ -242,12 +245,21 @@
 
     <!-- Sotos App Js -->
     <script src="~/Scripts/controller/sotosApp.js"></script>
-    
+
     <!-- Custom Js -->
     <script src="~/Scripts/js/admin.js"></script>
 
     <!-- Demo Js -->
     <script src="~/Scripts/js/demo.js"></script>
+
+    <!--<script>
+        $(function () {
+            $('.menu .list').click(function (e) {
+                $('.menu .list li').removeClass('active');
+                $(e.target).parentsUntil('ul').addClass('active');
+            });
+        });
+    </script>-->
 
 </body>
 </html>
