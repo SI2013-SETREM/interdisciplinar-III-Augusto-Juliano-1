@@ -20,13 +20,15 @@ namespace SotosWoodwork.Repository
                         .ShowSql()
                         .ConnectionString("Server=localhost;Port=5432;Database=SotosWoodwork;User Id=postgres;Password=admin;"))
                         .Mappings(c => c.FluentMappings.AddFromAssemblyOf<Models.Sts_pessoaMap>())
-                        //.ExposeConfiguration(x => new SchemaExport(x).Create(false, true))
+                        .Mappings(c => c.FluentMappings.AddFromAssemblyOf<Models.Sts_setorMap>())
+                        .ExposeConfiguration(x => new SchemaExport(x).Create(false, true))
                         .BuildSessionFactory();
 
-                    /*_sessionFactory = new Configuration()
+                    _sessionFactory = new Configuration()
                         .Configure()
-                        .AddAssembly(typeof (Models.Sts_pessoaMap).Assembly)
-                        .BuildSessionFactory();*/
+                        .AddAssembly(typeof(Models.Sts_pessoaMap).Assembly)
+                        .AddAssembly(typeof(Models.Sts_setorMap).Assembly)
+                        .BuildSessionFactory();
                 }
                 return _sessionFactory;
             }

@@ -18,6 +18,18 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/Pessoa/PessoaForm',
         controller: 'pessoaController',
     })
+    .when('/Setor', {
+        templateUrl: '/Setor/SetorList',
+        controller: 'setorController',
+    })
+    .when('/EditarSetor', {
+        templateUrl: '/Setor/SetorForm',
+        controller: 'setorController',
+    })
+    .when('/AdicionarSetor', {
+        templateUrl: '/Setor/SetorForm',
+        controller: 'setorController',
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -111,4 +123,59 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     $scope.loadPessoasList();
     $scope.loadCidadesList();
     $scope.loadGruposList();
+});
+
+app.controller("setorController", function ($scope, $http, $routeParams, $location) {
+    $scope.setoresList = [];
+    $scope.sortType = "Set_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_setor = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Setor/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_setor = response.data;
+        });
+    }
+
+    $scope.loadSetoresList = function () {
+        $http.get(window.location.origin + "/Setor/FindAll", { method: "GET" }).then(function (response) {
+            $scope.setoresList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_setor) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/Setor/Delete",
+                    params: {
+                        id: Sts_setor.Set_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadSetoresList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_setor) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Setor/Save",
+            params: {
+                json: Sts_setor
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_setor.Set_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Setor';
+            });
+        });
+    };
+
+    $scope.loadSetoresList();
 });
