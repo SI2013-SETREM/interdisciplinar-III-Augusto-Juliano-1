@@ -3434,6 +3434,7 @@
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
+    <Compile Include="Controllers\SetorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3661,6 +3662,8 @@
     <Content Include="Scripts\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Pessoa\PessoaForm.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Setor\SetorList.cshtml" />
+    <Content Include="Views\Setor\SetorForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
