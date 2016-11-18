@@ -9,11 +9,6 @@ namespace SotosWoodwork.Controllers
 {
     public class PessoaController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult PessoaList()
         {
             return View();

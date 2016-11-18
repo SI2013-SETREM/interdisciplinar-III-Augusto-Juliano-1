@@ -18,7 +18,6 @@ namespace SotosWoodwork.Models
             Map(x => x.Set_produtivo);
 
             Table("sts_setor");
-
         }
     }
 }
