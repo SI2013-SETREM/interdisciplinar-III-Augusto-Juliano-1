@@ -8,91 +8,73 @@
             </div>
             <div class="body">
                 <form role="form" name="form" ng-submit="save(Sts_pessoa);">
+
+                    <input class="form-control hidden" value="C" ng-model="Sts_pessoa.Pes_categoria" id="pes_categoria">
                     <input class="form-control hidden" value="0" ng-model="Sts_pessoa.Pes_codigo" id="pes_codigo">
-
-                    <label for="Pes_nomefantasia">Nome</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="Pes_nomefantasia" ng-model="Sts_pessoa.Pes_nomefantasia" id="Pes_nomefantasia">
-                        </div>
-                    </div>
-
-                    <label for="Pes_razaosocial">Razão Social<strong class="text-danger">*</strong></label>
-                    <div class="form-group required">
-                        <div class="form-line">
-                            <input class="form-control" ng-model="Sts_pessoa.Pes_razaosocial" id="Pes_razaosocial" required>
-                        </div>
-                    </div>
 
                     <label for="Pes_tipo">Tipo<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <select class="form-control show-tick" ng-model="Sts_pessoa.Pes_tipo" required>
+                            <select id="pes_tipo" class="form-control show-tick" ng-model="Sts_pessoa.Pes_tipo" required>
                                 <option value="F">Física</option>
                                 <option value="J">Jurídica</option>
                             </select>
                         </div>
                     </div>
 
-                    <label for="Pes_categoria">Categoria<strong class="text-danger">*</strong></label>
+                    <label id="lblPes_razaosocial" for="Pes_razaosocial">Razão Social<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <select class="form-control show-tick" ng-model="Sts_pessoa.Pes_categoria" required>
-                                <option value="A">Opção1</option>
-                                <option value="B">Opção2</option>
-                            </select>
+                            <input class="form-control" ng-model="Sts_pessoa.Pes_razaosocial" id="Pes_razaosocial" required>
+                        </div>
+                    </div>
+
+                    <label id="lblPes_nomefantasia" for="Pes_nomefantasia">Nome Fantasia</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="Pes_nomefantasia" ng-model="Sts_pessoa.Pes_nomefantasia" id="Pes_nomefantasia">
                         </div>
                     </div>
 
                     <label for="Cid_codigo">Cidade<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <select id="Cid_codigo" class="form-control" ng-model="Sts_pessoa.Sts_cidade" ng-options="Sts_cidade.Cid_descricao for Sts_cidade in cidadesList track by Sts_cidade.Cid_codigo" required></select>
+                            <select id="Cid_codigo" class="form-control" ng-model="Sts_pessoa.Sts_cidade" ng-options="Sts_cidade.Cid_descricao + ' / ' +  Sts_cidade.Cid_uf for Sts_cidade in cidadesList track by Sts_cidade.Cid_codigo" required></select>
                         </div>
                     </div>
 
-                    <label for="Pes_categoria">Categoria<strong class="text-danger">*</strong></label>
+                    <label id="lblPes_cpfcnpj" for="Pes_cpfcnpj">CPF/CNPJ</label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <select class="form-control show-tick" ng-model="Sts_pessoa.Pes_categoria" required>
-                                <option value="A">Opção1</option>
-                                <option value="B">Opção2</option>
-                            </select>
+                            <input type="number" class="form-control" ng-model="Sts_pessoa.Pes_cpfcnpj" id="Pes_cpfcnpj">
                         </div>
                     </div>
 
-                    <label for="Pes_cpfcnpj">CPF/CNPJ<strong class="text-danger">*</strong></label>
+                    <label for="Pes_cep">CEP</label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <input class="form-control" ng-model="Sts_pessoa.Pes_cpfcnpj" id="Pes_cpfcnpj" required>
+                            <input class="form-control" ng-model="Sts_pessoa.Pes_cep" id="Pes_cep">
                         </div>
                     </div>
 
-                    <label for="Pes_cep">CEP<strong class="text-danger">*</strong></label>
+                    <label for="Pes_endereco">Endereço</label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <input class="form-control" ng-model="Sts_pessoa.Pes_cep" id="Pes_cep" required>
+                            <input class="form-control" ng-model="Sts_pessoa.Pes_endereco" id="Pes_endereco">
                         </div>
                     </div>
 
-                    <label for="Pes_endereco">Endereço<strong class="text-danger">*</strong></label>
+                    <label for="Pes_bairro">Bairro</label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <input class="form-control" ng-model="Sts_pessoa.Pes_endereco" id="Pes_endereco" required>
+                            <input class="form-control" ng-model="Sts_pessoa.Pes_bairro" id="Pes_bairro">
                         </div>
                     </div>
 
-                    <label for="Pes_bairro">Bairro<strong class="text-danger">*</strong></label>
+                    <label for="Pes_numero">Número</label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <input class="form-control" ng-model="Sts_pessoa.Pes_bairro" id="Pes_bairro" required>
-                        </div>
-                    </div>
-
-                    <label for="Pes_numero">Número<strong class="text-danger">*</strong></label>
-                    <div class="form-group required">
-                        <div class="form-line">
-                            <input class="form-control" ng-model="Sts_pessoa.Pes_numero" id="Pes_numero" required>
+                            <input type="number" class="form-control" ng-model="Sts_pessoa.Pes_numero" id="Pes_numero">
                         </div>
                     </div>
 
@@ -126,9 +108,10 @@
 
                     <label for="Pes_situacao">Ativo</label>
                     <div class="form-group">
-                        <input type="checkbox" ng-model="Sts_pessoa.Pes_situacao" id="Pes_situacao" checked />
+                        <div class="form-line">
+                            <input type="checkbox" ng-model="Sts_pessoa.Pes_situacao" id="Pes_situacao" checked />
+                        </div>
                     </div>
-
                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
                     <a class="btn btn-default m-t-15 waves-effect" href="#Pessoa">Cancelar</a>
                 </form>
@@ -139,6 +122,29 @@
 
 <script>
     $(function () {
+        $("#pes_tipo").change(function () {
+            if (this.value == 'F') {
+                $("#lblPes_razaosocial").text('Nome Completo');
+                $("#lblPes_nomefantasia").text('Apelido');
+                $("#lblPes_cpfcnpj").text('CPF');
+            } else if (this.value == 'J') {
+                $("#lblPes_razaosocial").text('Razão Social');
+                $("#lblPes_nomefantasia").text('Nome Fantasia');
+                $("#lblPes_cpfcnpj").text('CNPJ');
+            }
+        });
+        $("#Pes_cpfcnpj").blur(function () {
+            if ($("#Pes_cpfcnpj").val() != '') {
+                if ($("#pes_tipo").val() == 'F') {
+                    if (TestaCPF($("#Pes_cpfcnpj").val())) {
+                        return true;
+                    } else {
+                        $("#Pes_cpfcnpj").val('');
+                        alert("* CPF Informado Inválido");
+                    }
+                }
+            }
+        });
         $.AdminBSB.browser.activate();
         $.AdminBSB.leftSideBar.activate();
         $.AdminBSB.rightSideBar.activate();
@@ -147,5 +153,26 @@
         $.AdminBSB.input.activate();
         $.AdminBSB.select.activate();
         $.AdminBSB.search.activate();
+
     });
+    function TestaCPF(strCPF) {
+        var Soma;
+        var Resto;
+        Soma = 0;
+        if (strCPF == "00000000000") return false;
+
+        for (i = 1; i <= 9; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+        Resto = (Soma * 10) % 11;
+
+        if ((Resto == 10) || (Resto == 11)) Resto = 0;
+        if (Resto != parseInt(strCPF.substring(9, 10))) return false;
+
+        Soma = 0;
+        for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+        Resto = (Soma * 10) % 11;
+
+        if ((Resto == 10) || (Resto == 11)) Resto = 0;
+        if (Resto != parseInt(strCPF.substring(10, 11))) return false;
+        return true;
+    }
 </script>

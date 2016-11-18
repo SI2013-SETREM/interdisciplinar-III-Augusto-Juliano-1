@@ -42,7 +42,7 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     $scope.pessoasList = [];
     $scope.cidadesList = [];
     $scope.gruposList = [];
-    $scope.sortType = "Pes_nomefantasia";
+    $scope.sortType = "Pes_razaosocial";
     $scope.sortReverse = false;
     $scope.search = "";
     $scope.http = $http;
