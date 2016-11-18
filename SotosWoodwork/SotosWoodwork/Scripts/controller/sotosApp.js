@@ -22,7 +22,7 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 
-app.controller("sotosController", function ($scope, $compile, $http) {
+app.controller("sotosController", function ($scope, $http) {
 
 }).directive('convertToNumber', function () {
     return {
