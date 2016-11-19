@@ -30,6 +30,30 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/Setor/SetorForm',
         controller: 'setorController',
     })
+    .when('/Maquina', {
+        templateUrl: '/Maquina/MaquinaList',
+        controller: 'maquinaController',
+    })
+    .when('/EditarMaquina', {
+        templateUrl: '/Maquina/MaquinaForm',
+        controller: 'maquinaController',
+    })
+    .when('/AdicionarMaquina', {
+        templateUrl: '/Maquina/MaquinaForm',
+        controller: 'maquinaController',
+    })
+    .when('/UnidadeMedida', {
+        templateUrl: '/UnidadeMedida/UnidadeMedidaList',
+        controller: 'unidademedidaController',
+    })
+    .when('/EditarUnidadeMedida', {
+        templateUrl: '/UnidadeMedida/UnidadeMedidaForm',
+        controller: 'unidademedidaController',
+    })
+    .when('/AdicionarUnidadeMedida', {
+        templateUrl: '/UnidadeMedida/UnidadeMedidaForm',
+        controller: 'unidademedidaController',
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -71,7 +95,7 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     $scope.search = "";
     $scope.http = $http;
     $scope.Sts_pessoa = {};
-    
+
     if ($routeParams.id) {
         $http.get(window.location.origin + "/Pessoa/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
             $scope.Sts_pessoa = response.data;
@@ -189,4 +213,126 @@ app.controller("setorController", function ($scope, $http, $routeParams, $locati
     };
 
     $scope.loadSetoresList();
+});
+
+app.controller("maquinaController", function ($scope, $http, $routeParams, $location) {
+    $scope.maquinasList = [];
+    $scope.setoresList = [];
+    $scope.gruposList = [];
+    $scope.sortType = "Maq_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_maquina = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Maquina/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_maquina = response.data;
+        });
+    }
+
+    $scope.loadMaquinasList = function () {
+        $http.get(window.location.origin + "/Maquina/FindAll", { method: "GET" }).then(function (response) {
+            $scope.maquinasList = response.data;
+        });
+    };
+
+    $scope.loadSetoresList = function () {
+        $http.get(window.location.origin + "/Setor/FindAll", { method: "GET" }).then(function (response) {
+            $scope.setoresList = response.data;
+            if (!$scope.Sts_maquina.Maq_codigo)
+                $scope.Sts_maquina.Sts_setor = $scope.setoresList[0];
+        });
+    };
+
+    $scope.delete = function (Sts_maquina) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/Maquina/Delete",
+                    params: {
+                        id: Sts_maquina.Maq_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadMaquinasList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_maquina) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Maquina/Save",
+            params: {
+                json: Sts_maquina
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_maquina.Maq_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Maquina';
+            });
+        });
+    };
+
+    $scope.loadMaquinasList();
+    $scope.loadSetoresList();
+});
+
+app.controller("unidademedidaController", function ($scope, $http, $routeParams, $location) {
+    $scope.unidademedidaList = [];
+    $scope.sortType = "Unm_sigla";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_unidademedida = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/UnidadeMedida/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_unidademedida = response.data;
+        });
+    }
+
+    $scope.loadUnidadeMedidaList = function () {
+        $http.get(window.location.origin + "/UnidadeMedida/FindAll", { method: "GET" }).then(function (response) {
+            $scope.unidademedidaList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_unidademedida) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/UnidadeMedida/Delete",
+                    params: {
+                        id: Sts_unidademedida.Unm_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadUnidadeMedidaList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_unidademedida) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/UnidadeMedida/Save",
+            params: {
+                json: Sts_unidademedida
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_unidademedida.Unm_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#UnidadeMedida';
+            });
+        });
+    };
+
+    $scope.loadUnidadeMedidaList();
 });
