@@ -54,6 +54,18 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/UnidadeMedida/UnidadeMedidaForm',
         controller: 'unidademedidaController',
     })
+    .when('/Grupo', {
+        templateUrl: '/Grupo/GrupoList',
+        controller: 'grupoController',
+    })
+    .when('/EditarGrupo', {
+        templateUrl: '/Grupo/GrupoForm',
+        controller: 'grupoController',
+    })
+    .when('/AdicionarGrupo', {
+        templateUrl: '/Grupo/GrupoForm',
+        controller: 'grupoController',
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -280,6 +292,61 @@ app.controller("maquinaController", function ($scope, $http, $routeParams, $loca
 
     $scope.loadMaquinasList();
     $scope.loadSetoresList();
+});
+
+app.controller("grupoController", function ($scope, $http, $routeParams, $location) {
+    $scope.gruposList = [];
+    $scope.sortType = "Grp_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_grupo = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Grupo/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_grupo = response.data;
+        });
+    }
+
+    $scope.loadGruposList = function () {
+        $http.get(window.location.origin + "/Grupo/FindAll", { method: "GET" }).then(function (response) {
+            $scope.gruposList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_grupo) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/Grupo/Delete",
+                    params: {
+                        id: Sts_grupo.Grp_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadGruposList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_grupo) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Grupo/Save",
+            params: {
+                json: Sts_grupo
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_grupo.Grp_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Grupo';
+            });
+        });
+    };
+
+    $scope.loadGruposList();
 });
 
 app.controller("unidademedidaController", function ($scope, $http, $routeParams, $location) {

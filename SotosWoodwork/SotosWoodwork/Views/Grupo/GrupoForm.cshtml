@@ -1,0 +1,56 @@
+﻿<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Grupo de Clientes
+                </h2>
+            </div>
+            <div class="body">
+                <form role="form" name="form" ng-submit="save(Sts_grupo);">
+                    <input class="form-control hidden" value="0" ng-model="Sts_grupo.Grp_codigo" id="grp_codigo">
+
+                    <label for="Set_descricao">Descrição<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <input class="form-control" ng-model="Sts_grupo.Grp_descricao" id="Grp_descricao" required>
+                        </div>
+                    </div>
+
+                    <label for="Grp_descontofixo">Desconto Fixo (%)<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <input type="number" step="0.20" max="99.90" class="form-control" ng-model="Sts_grupo.Grp_descontofixo" id="Grp_descontofixo" required>
+                        </div>
+                    </div>
+
+                    <label for="Grp_status">Situação<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <select id="grp_status" class="form-control show-tick" ng-model="Sts_grupo.Grp_status" required convert-to-bool>
+                                <option value="true">Ativo</option>
+                                <option value="false">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
+                    <a class="btn btn-default m-t-15 waves-effect" href="#Grupo">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $.AdminBSB.browser.activate();
+        $.AdminBSB.leftSideBar.activate();
+        $.AdminBSB.rightSideBar.activate();
+        $.AdminBSB.navbar.activate();
+        $.AdminBSB.dropdownMenu.activate();
+        $.AdminBSB.input.activate();
+        $.AdminBSB.select.activate();
+        $.AdminBSB.search.activate();
+    });
+</script>
