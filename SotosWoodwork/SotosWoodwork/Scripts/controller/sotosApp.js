@@ -48,7 +48,7 @@ app.controller("sotosController", function ($scope, $http) {
             });
         }
     };
-})/*.directive('convertToBool', function () {
+}).directive('convertToBool', function () {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModel) {
@@ -60,7 +60,7 @@ app.controller("sotosController", function ($scope, $http) {
             });
         }
     };
-})*/;
+});
 
 app.controller("pessoaController", function ($scope, $http, $routeParams, $location) {
     $scope.pessoasList = [];
