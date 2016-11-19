@@ -19,16 +19,18 @@ namespace SotosWoodwork.Repository
                         .Database(PostgreSQLConfiguration.PostgreSQL82
                         .ShowSql()
                         .ConnectionString("Server=localhost;Port=5432;Database=SotosWoodwork;User Id=postgres;Password=admin;"))
-                        .Mappings(c => c.FluentMappings.AddFromAssemblyOf<Models.Sts_pessoaMap>())
-                        .Mappings(c => c.FluentMappings.AddFromAssemblyOf<Models.Sts_setorMap>())
-                        .ExposeConfiguration(x => new SchemaExport(x).Create(false, true))
+                        .Mappings(c => c.FluentMappings.AddFromAssemblyOf<Models.Sts_pessoaMap>())// Não precisa adicionar tudo as merdas de mapeamento aqui
+                                                                                                  // o fluent sabe de onde pegar, por estarem todos no mesmo path  
+                        //.ExposeConfiguration(x => new SchemaExport(x).Create(false, true))      
                         .BuildSessionFactory();
+                    
+                    // Essa merda aqui é outra forma de configurar, acho que nem ta funcionando
+                    // Só ignora que rola de boas com o de cima
 
-                    _sessionFactory = new Configuration()
+                    /*_sessionFactory = new Configuration()
                         .Configure()
                         .AddAssembly(typeof(Models.Sts_pessoaMap).Assembly)
-                        .AddAssembly(typeof(Models.Sts_setorMap).Assembly)
-                        .BuildSessionFactory();
+                        .BuildSessionFactory();*/
                 }
                 return _sessionFactory;
             }

@@ -48,7 +48,19 @@ app.controller("sotosController", function ($scope, $http) {
             });
         }
     };
-});
+})/*.directive('convertToBool', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModel) {
+            ngModel.$parsers.push(function (val) {
+                return val == true || val == 'true';
+            });
+            ngModel.$formatters.push(function (val) {
+                return '' + val;
+            });
+        }
+    };
+})*/;
 
 app.controller("pessoaController", function ($scope, $http, $routeParams, $location) {
     $scope.pessoasList = [];
@@ -59,8 +71,7 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     $scope.search = "";
     $scope.http = $http;
     $scope.Sts_pessoa = {};
-    $scope.Pes_tipo = [{ valor: "F", descricao: "Física" }, { valor: "J", descricao: "Jurídica" }];
-
+    
     if ($routeParams.id) {
         $http.get(window.location.origin + "/Pessoa/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
             $scope.Sts_pessoa = response.data;
@@ -83,7 +94,7 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
 
     $scope.loadGruposList = function () {
         $http.get(window.location.origin + "/Grupo/FindAll", { method: "GET" }).then(function (response) {
-            $scope.cidadesList = response.data;
+            $scope.gruposList = response.data;
         });
     };
 

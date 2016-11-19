@@ -52,14 +52,14 @@
                     <label for="Cid_codigo">Cidade<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <select id="Cid_codigo" class="form-control" ng-model="Sts_pessoa.Sts_cidade" ng-options="Sts_cidade.Cid_descricao + ' / ' +  Sts_cidade.Cid_uf for Sts_cidade in cidadesList track by Sts_cidade.Cid_codigo" required></select>
+                            <select id="Cid_codigo" class="form-control" ng-model="Sts_pessoa.Sts_cidade" ng-options="Sts_cidade.Cid_descricao for Sts_cidade in cidadesList track by Sts_cidade.Cid_codigo" required></select>
                         </div>
                     </div>
 
                     <label id="lblPes_cpfcnpj" for="Pes_cpfcnpj">CPF/CNPJ</label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <input type="number" class="form-control" ng-model="Sts_pessoa.Pes_cpfcnpj" id="Pes_cpfcnpj">
+                            <input type="text" class="form-control" ng-model="Sts_pessoa.Pes_cpfcnpj" id="Pes_cpfcnpj">
                         </div>
                     </div>
 
@@ -152,7 +152,7 @@
                     if (TestaCPF($("#Pes_cpfcnpj").val())) {
                         return true;
                     } else {
-                        $("#Pes_cpfcnpj").val('');
+                        $("#Pes_cpfcnpj").val(undefined);
                         alert("* CPF Informado Inválido");
                     }
                 }

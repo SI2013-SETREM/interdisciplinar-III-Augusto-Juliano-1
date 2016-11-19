@@ -41,7 +41,7 @@
                                         </th>
                                         <th>
                                             <a ng-click="sortType = 'Set_produtivo';sortReverse = !sortReverse">
-                                                Setor Produtivo?
+                                                Tipo de Setor
                                                 <i ng-show="sortType === 'Set_produtivo' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
                                                 <i ng-show="sortType === 'Set_produtivo' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
@@ -56,7 +56,7 @@
                                     </tr>
                                     <tr ng-repeat="Sts_setor in setoresList| orderBy:sortType:sortReverse | filter:search">
                                         <td>{{Sts_setor.Set_descricao}}</td>
-                                        <td>{{Sts_setor.Set_produtivo}}</td>
+                                        <td>{{Sts_setor.Set_produtivo == true ? 'Produtivo' : 'Não Produtivo'}}</td>
                                         <td class="text-center">
                                             <a href="#EditarSetor?id={{Sts_setor.Set_codigo}}" ng-click="$scope.model = Sts_setor;">
                                                 <i class="material-icons col-blue">create</i>
