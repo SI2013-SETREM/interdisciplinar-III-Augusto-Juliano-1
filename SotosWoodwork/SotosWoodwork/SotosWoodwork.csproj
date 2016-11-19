@@ -3433,8 +3433,10 @@
     <Compile Include="Controllers\CidadeController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaquinaController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
+    <Compile Include="Controllers\UnidadeMedidaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3664,6 +3666,10 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Setor\SetorList.cshtml" />
     <Content Include="Views\Setor\SetorForm.cshtml" />
+    <Content Include="Views\Maquina\MaquinaList.cshtml" />
+    <Content Include="Views\Maquina\MaquinaForm.cshtml" />
+    <Content Include="Views\UnidadeMedida\UnidadeMedidaList.cshtml" />
+    <Content Include="Views\UnidadeMedida\UnidadeMedidaForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
