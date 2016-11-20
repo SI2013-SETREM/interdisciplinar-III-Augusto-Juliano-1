@@ -31,6 +31,17 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
+        //Listagem e Manutenção de Colaboradores
+        public ActionResult ColaboradorList()
+        {
+            return View();
+        }
+
+        public ActionResult ColaboradorForm()
+        {
+            return View();
+        }
+
         [HttpGet]
         public string FindAllClient()
         {
@@ -41,6 +52,24 @@ namespace SotosWoodwork.Controllers
                 for (int i = 0; i < listSts_pessoa.Count; i++)
                 {
                     if (listSts_pessoa[i].Pes_categoria == "C")
+                    {
+                        listSts_cliente.Add(listSts_pessoa[i]);
+                    }
+                }
+                return JsonConvert.SerializeObject(listSts_cliente);
+            }
+        }
+
+        [HttpGet]
+        public string FindAllEmployee()
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>();
+                IList<Sts_pessoa> listSts_cliente = new List<Sts_pessoa>();
+                for (int i = 0; i < listSts_pessoa.Count; i++)
+                {
+                    if (listSts_pessoa[i].Pes_categoria == "T")
                     {
                         listSts_cliente.Add(listSts_pessoa[i]);
                     }
@@ -107,6 +136,29 @@ namespace SotosWoodwork.Controllers
                     repository.BeginTransaction();
                     Sts_pessoa sts_pessoa = JsonConvert.DeserializeObject<Sts_pessoa>(json);
                     sts_pessoa.Pes_categoria = "C";
+                    repository.Save(sts_pessoa);
+
+                    return JsonConvert.SerializeObject(sts_pessoa);
+                }
+                catch
+                {
+                    repository.RollbackTransaction();
+
+                    return "Erro";
+                }
+            }
+        }
+
+        public string SaveEmployee(string json)
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                try
+                {
+                    repository.BeginTransaction();
+                    Sts_pessoa sts_pessoa = JsonConvert.DeserializeObject<Sts_pessoa>(json);
+                    sts_pessoa.Pes_categoria = "T";
+                    sts_pessoa.Pes_tipo = "F";
                     repository.Save(sts_pessoa);
 
                     return JsonConvert.SerializeObject(sts_pessoa);

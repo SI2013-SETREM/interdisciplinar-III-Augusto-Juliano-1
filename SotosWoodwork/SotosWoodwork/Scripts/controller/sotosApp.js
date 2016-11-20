@@ -67,15 +67,27 @@ app.config(function ($routeProvider, $locationProvider) {
         controller: 'grupoController',
     })
     .when('/Fornecedor', {
-            templateUrl: '/Pessoa/FornecedorList',
-            controller: 'pessoaController',
-        })
+        templateUrl: '/Pessoa/FornecedorList',
+        controller: 'pessoaController',
+    })
     .when('/EditarFornecedor', {
         templateUrl: '/Pessoa/FornecedorForm',
         controller: 'pessoaController',
     })
     .when('/AdicionarFornecedor', {
         templateUrl: '/Pessoa/FornecedorForm',
+        controller: 'pessoaController',
+    })
+    .when('/Colaborador', {
+                templateUrl: '/Pessoa/ColaboradorList',
+                controller: 'pessoaController',
+            })
+    .when('/EditarColaborador', {
+        templateUrl: '/Pessoa/ColaboradorForm',
+        controller: 'pessoaController',
+    })
+    .when('/AdicionarColaborador', {
+        templateUrl: '/Pessoa/ColaboradorForm',
         controller: 'pessoaController',
     })
     .otherwise({ redirectTo: '/' });
@@ -113,6 +125,7 @@ app.controller("sotosController", function ($scope, $http) {
 app.controller("pessoaController", function ($scope, $http, $routeParams, $location) {
     $scope.pessoasList = [];
     $scope.fornecedoresList = [];
+    $scope.colaboradoresList = [];
     $scope.cidadesList = [];
     $scope.gruposList = [];
     $scope.sortType = "Pes_razaosocial";
@@ -130,6 +143,12 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     $scope.loadPessoasList = function () {
         $http.get(window.location.origin + "/Pessoa/FindAllClient", { method: "GET" }).then(function (response) {
             $scope.pessoasList = response.data;
+        });
+    };
+
+    $scope.loadColaboradoresList = function () {
+        $http.get(window.location.origin + "/Pessoa/FindAllEmployee", { method: "GET" }).then(function (response) {
+            $scope.colaboradoresList = response.data;
         });
     };
 
@@ -200,8 +219,23 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
         });
     };
 
+    $scope.saveColaborador = function (Sts_pessoa) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Pessoa/SaveEmployee",
+            params: {
+                json: Sts_pessoa
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_pessoa.Pes_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Colaborador';
+            });
+        });
+    };
+
     $scope.loadPessoasList();
     $scope.loadFornecedoresList();
+    $scope.loadColaboradoresList();
     $scope.loadCidadesList();
     $scope.loadGruposList();
 });
