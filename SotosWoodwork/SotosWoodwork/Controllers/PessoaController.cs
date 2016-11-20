@@ -9,6 +9,7 @@ namespace SotosWoodwork.Controllers
 {
     public class PessoaController : Controller
     {
+        //Listagem e Manutenção de Clientes
         public ActionResult PessoaList()
         {
             return View();
@@ -19,16 +20,53 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
+        //Listagem e Manutenção de Fornecedores
+        public ActionResult FornecedorList()
+        {
+            return View();
+        }
+
+        public ActionResult FornecedorForm()
+        {
+            return View();
+        }
+
         [HttpGet]
-        public string FindAll()
+        public string FindAllClient()
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
                 IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>();
-                return JsonConvert.SerializeObject(listSts_pessoa);
+                IList<Sts_pessoa> listSts_cliente = new List<Sts_pessoa>();
+                for (int i = 0; i < listSts_pessoa.Count; i++)
+                {
+                    if (listSts_pessoa[i].Pes_categoria == "C")
+                    {
+                        listSts_cliente.Add(listSts_pessoa[i]);
+                    }
+                }
+                return JsonConvert.SerializeObject(listSts_cliente);
             }
         }
-        
+
+        [HttpGet]
+        public string FindAllProvider()
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>();
+                IList<Sts_pessoa> listSts_fornecedor = new List<Sts_pessoa>();
+                for (int i = 0; i < listSts_pessoa.Count; i++)
+                {
+                    if (listSts_pessoa[i].Pes_categoria == "F")
+                    {
+                        listSts_fornecedor.Add(listSts_pessoa[i]);
+                    }
+                }
+                return JsonConvert.SerializeObject(listSts_fornecedor);
+            }
+        }
+
         [HttpGet]
         public string GetById(int id)
         {
@@ -60,7 +98,7 @@ namespace SotosWoodwork.Controllers
             }
         }
 
-        public string Save(string json)
+        public string SaveClient(string json)
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
@@ -68,6 +106,29 @@ namespace SotosWoodwork.Controllers
                 {
                     repository.BeginTransaction();
                     Sts_pessoa sts_pessoa = JsonConvert.DeserializeObject<Sts_pessoa>(json);
+                    sts_pessoa.Pes_categoria = "C";
+                    repository.Save(sts_pessoa);
+
+                    return JsonConvert.SerializeObject(sts_pessoa);
+                }
+                catch
+                {
+                    repository.RollbackTransaction();
+
+                    return "Erro";
+                }
+            }
+        }
+
+        public string SaveProvider(string json)
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                try
+                {
+                    repository.BeginTransaction();
+                    Sts_pessoa sts_pessoa = JsonConvert.DeserializeObject<Sts_pessoa>(json);
+                    sts_pessoa.Pes_categoria = "F";
                     repository.Save(sts_pessoa);
 
                     return JsonConvert.SerializeObject(sts_pessoa);
