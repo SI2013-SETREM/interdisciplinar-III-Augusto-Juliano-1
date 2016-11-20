@@ -539,7 +539,13 @@
     color: #CDDC39 !important; }
 
 .theme-yellow .navbar {
-  background-color: #FFEB3B; }
+    background-color: white;
+    background-image: url("../../images/background.jpg");
+    width: 100%;
+    opacity: 0.9;
+}
+
+}
 
 .theme-yellow .navbar-brand {
   color: #fff; }
