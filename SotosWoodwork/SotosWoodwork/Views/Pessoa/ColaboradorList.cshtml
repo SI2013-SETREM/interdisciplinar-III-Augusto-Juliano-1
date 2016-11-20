@@ -1,4 +1,4 @@
-﻿<a href="#AdicionarPessoa" style="border-radius: 50%; position: fixed !important; bottom: 20px; right: 20px; z-index: 99999998;" class="btn bg-blue btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons">add</i></a>
+﻿<a href="#AdicionarColaborador" style="border-radius: 50%; position: fixed !important; bottom: 20px; right: 20px; z-index: 99999998;" class="btn bg-blue btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons">add</i></a>
 
 <!-- Page Loader -->
 <div class="page-loader-wrapper" ng-show="http.pendingRequests.length > 0">
@@ -18,7 +18,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Listagem de Clientes
+                    Listagem de Trabalhadores
                 </h2>
             </div>
             <div class="body" ng-controller="pessoaController">
@@ -26,7 +26,7 @@
                     <div class="col-lg-11">
                         <div class="input-group">
                             <div class="form-line">
-                                <input type="text" class="form-control" placeholder="Pesquisar"  ng-model="search">
+                                <input type="text" class="form-control" placeholder="Pesquisar" ng-model="search">
                             </div>
                             <span class="input-group-addon">
                                 <i class="material-icons">search</i>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="col-lg-1 text-right">
-                        <div class="btn btn-primary" ng-click="loadPessoasList()">
+                        <div class="btn btn-primary" ng-click="loadColaboradoresList()">
                             <i class="material-icons">refresh</i>
                         </div>
                     </div>
@@ -47,30 +47,30 @@
                                     <tr>
                                         <th>
                                             <a ng-click="sortType = 'Pes_razaosocial';sortReverse = !sortReverse">
-                                                Razão Social
+                                                Nome Completo
                                                 <i ng-show="sortType === 'Pes_razaosocial' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
                                                 <i ng-show="sortType === 'Pes_razaosocial' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
                                         </th>
                                         <th>
-                                            <a ng-click="sortType = 'Pes_nomefantasia';sortReverse = !sortReverse">
-                                                Nome Fantasia
-                                                <i ng-show="sortType === 'Pes_nomefantasia' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'Pes_nomefantasia' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
-                                            </a>
-                                        </th>
-                                        <th>
                                             <a ng-click="sortType = 'Pes_cpfcnpj';sortReverse = !sortReverse">
-                                                CPF/CNPJ
+                                                CPF
                                                 <i ng-show="sortType === 'Pes_cpfcnpj' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
                                                 <i ng-show="sortType === 'Pes_cpfcnpj' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
                                         </th>
                                         <th>
-                                            <a ng-click="sortType = 'Grp_descricao';sortReverse = !sortReverse">
-                                                Grupo do Cliente
-                                                <i ng-show="sortType === 'Grp_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'Grp_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            <a ng-click="sortType = 'Pes_telefone';sortReverse = !sortReverse">
+                                                Telefone
+                                                <i ng-show="sortType === 'Pes_telefone' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pes_telefone' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Pes_situacao';sortReverse = !sortReverse">
+                                                Ativo?
+                                                <i ng-show="sortType === 'Pes_situacao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pes_situacao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
                                         </th>
                                         <th class="col-button-header">Editar</th>
@@ -78,16 +78,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-show="pessoasList.length === 0 && http.pendingRequests.length == 0">
+                                    <tr ng-show="colaboradoresList.length === 0 && http.pendingRequests.length == 0">
                                         <td colspan="1000">Nenhum registro encontrado :(</td>
                                     </tr>
-                                    <tr ng-repeat="Sts_pessoa in pessoasList| orderBy:sortType:sortReverse | filter:search">
+                                    <tr ng-repeat="Sts_pessoa in colaboradoresList| orderBy:sortType:sortReverse | filter:search">
                                         <td>{{Sts_pessoa.Pes_razaosocial}}</td>
-                                        <td>{{Sts_pessoa.Pes_nomefantasia}}</td>
                                         <td>{{Sts_pessoa.Pes_cpfcnpj}}</td>
-                                        <td>{{Sts_pessoa.Sts_grupo.Grp_descricao + ' (' + Sts_pessoa.Sts_grupo.Grp_descontofixo + '% de desconto)'}}</td>
+                                        <td>{{Sts_pessoa.Pes_telefone}}</td>
+                                        <td>{{Sts_pessoa.Pes_situacao == true ? "Sim" : "Não"}}</td>
                                         <td class="text-center">
-                                            <a href="#EditarPessoa?id={{Sts_pessoa.Pes_codigo}}" ng-click="$scope.model = Sts_pessoa;">
+                                            <a href="#EditarColaborador?id={{Sts_pessoa.Pes_codigo}}" ng-click="$scope.model = Sts_pessoa;">
                                                 <i class="material-icons col-blue">create</i>
                                             </a>
                                         </td>
@@ -106,7 +106,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(function () {
         $.AdminBSB.browser.activate();

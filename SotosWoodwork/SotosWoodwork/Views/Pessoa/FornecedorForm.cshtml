@@ -16,13 +16,13 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Clientes
+                    Fornecedores
                 </h2>
             </div>
             <div class="body">
-                <form role="form" name="form" ng-submit="save(Sts_pessoa);">
+                <form role="form" name="form" ng-submit="saveFornecedor(Sts_pessoa);">
 
-                    <input class="form-control hidden" value="C" ng-model="Sts_pessoa.Pes_categoria" id="pes_categoria">
+                    <input class="form-control hidden" value="F" ng-model="Sts_pessoa.Pes_categoria" id="pes_categoria">
                     <input class="form-control hidden" value="0" ng-model="Sts_pessoa.Pes_codigo" id="pes_codigo">
 
                     <label for="Pes_tipo">Tipo<strong class="text-danger">*</strong></label>
@@ -50,16 +50,9 @@
                         </div>
 
                         <label id="lblPes_cpfcnpj" for="Pes_cpfcnpj">CPF/CNPJ</label>
-                        <div class="form-group">
+                        <div class="form-group required">
                             <div class="form-line">
                                 <input type="text" class="form-control" ng-model="Sts_pessoa.Pes_cpfcnpj" id="Pes_cpfcnpj">
-                            </div>
-                        </div>
-
-                        <label for="Grp_codigo">Grupo do Cliente</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <select id="Grp_codigo" class="form-control" ng-model="Sts_pessoa.Sts_grupo" ng-options="Sts_grupo.Grp_descricao for Sts_grupo in gruposList track by Sts_grupo.Grp_codigo"></select>
                             </div>
                         </div>
 
@@ -99,7 +92,7 @@
                         </div>
 
                         <label for="Pes_complemento">Complemento</label>
-                        <div class="form-group">
+                        <div class="form-group required">
                             <div class="form-line">
                                 <input class="form-control" ng-model="Sts_pessoa.Pes_complemento" id="Pes_complemento">
                             </div>
@@ -126,7 +119,7 @@
                             </div>
                         </div>
 
-                        <label for="Pes_situacao">Cliente Ativo?<strong class="text-danger">*</strong></label>
+                        <label for="Pes_situacao">Fornecedor Ativo?<strong class="text-danger">*</strong></label>
                         <div class="form-group required">
                             <div class="form-line">
                                 <select id="pes_situacao" class="form-control show-tick" ng-model="Sts_pessoa.Pes_situacao" required convert-to-bool>
@@ -137,7 +130,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
-                    <a class="btn btn-default m-t-15 waves-effect" href="#Pessoa">Cancelar</a>
+                    <a class="btn btn-default m-t-15 waves-effect" href="#Fornecedor">Cancelar</a>
                 </form>
             </div>
         </div>
@@ -180,7 +173,7 @@
         $.AdminBSB.select.activate();
         $.AdminBSB.search.activate();
         var url = window.location.href;
-        if (url.indexOf("EditarPessoa") > -1) {
+        if (url.indexOf("EditarFornecedor") > -1) {
             $("#formClient").removeClass("formClient");
         }
     });

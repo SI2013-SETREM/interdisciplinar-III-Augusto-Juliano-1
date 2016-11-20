@@ -66,6 +66,42 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/Grupo/GrupoForm',
         controller: 'grupoController',
     })
+    .when('/Fornecedor', {
+        templateUrl: '/Pessoa/FornecedorList',
+        controller: 'pessoaController',
+    })
+    .when('/EditarFornecedor', {
+        templateUrl: '/Pessoa/FornecedorForm',
+        controller: 'pessoaController',
+    })
+    .when('/AdicionarFornecedor', {
+        templateUrl: '/Pessoa/FornecedorForm',
+        controller: 'pessoaController',
+    })
+    .when('/Colaborador', {
+        templateUrl: '/Pessoa/ColaboradorList',
+        controller: 'pessoaController',
+    })
+    .when('/EditarColaborador', {
+        templateUrl: '/Pessoa/ColaboradorForm',
+        controller: 'pessoaController',
+    })
+    .when('/AdicionarColaborador', {
+        templateUrl: '/Pessoa/ColaboradorForm',
+        controller: 'pessoaController',
+    })
+    .when('/MateriaPrima', {
+        templateUrl: '/Produto/MateriaPrimaList',
+        controller: 'produtoController',
+    })
+    .when('/EditarMateriaPrima', {
+        templateUrl: '/Produto/MateriaPrimaForm',
+        controller: 'produtoController',
+    })
+    .when('/AdicionarMateriaPrima', {
+        templateUrl: '/Produto/MateriaPrimaForm',
+        controller: 'produtoController',
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -100,6 +136,8 @@ app.controller("sotosController", function ($scope, $http) {
 
 app.controller("pessoaController", function ($scope, $http, $routeParams, $location) {
     $scope.pessoasList = [];
+    $scope.fornecedoresList = [];
+    $scope.colaboradoresList = [];
     $scope.cidadesList = [];
     $scope.gruposList = [];
     $scope.sortType = "Pes_razaosocial";
@@ -115,8 +153,20 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     }
 
     $scope.loadPessoasList = function () {
-        $http.get(window.location.origin + "/Pessoa/FindAll", { method: "GET" }).then(function (response) {
+        $http.get(window.location.origin + "/Pessoa/FindAllClient", { method: "GET" }).then(function (response) {
             $scope.pessoasList = response.data;
+        });
+    };
+
+    $scope.loadColaboradoresList = function () {
+        $http.get(window.location.origin + "/Pessoa/FindAllEmployee", { method: "GET" }).then(function (response) {
+            $scope.colaboradoresList = response.data;
+        });
+    };
+
+    $scope.loadFornecedoresList = function () {
+        $http.get(window.location.origin + "/Pessoa/FindAllProvider", { method: "GET" }).then(function (response) {
+            $scope.fornecedoresList = response.data;
         });
     };
 
@@ -156,7 +206,7 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
     $scope.save = function (Sts_pessoa) {
         $http({
             method: "GET",
-            url: window.location.origin + "/Pessoa/Save",
+            url: window.location.origin + "/Pessoa/SaveClient",
             params: {
                 json: Sts_pessoa
             }
@@ -167,7 +217,37 @@ app.controller("pessoaController", function ($scope, $http, $routeParams, $locat
         });
     };
 
+    $scope.saveFornecedor = function (Sts_pessoa) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Pessoa/SaveProvider",
+            params: {
+                json: Sts_pessoa
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_pessoa.Pes_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Fornecedor';
+            });
+        });
+    };
+
+    $scope.saveColaborador = function (Sts_pessoa) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Pessoa/SaveEmployee",
+            params: {
+                json: Sts_pessoa
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_pessoa.Pes_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Colaborador';
+            });
+        });
+    };
+
     $scope.loadPessoasList();
+    $scope.loadFornecedoresList();
+    $scope.loadColaboradoresList();
     $scope.loadCidadesList();
     $scope.loadGruposList();
 });
@@ -401,5 +481,77 @@ app.controller("unidademedidaController", function ($scope, $http, $routeParams,
         });
     };
 
+    $scope.loadUnidadeMedidaList();
+});
+
+app.controller("produtoController", function ($scope, $http, $routeParams, $location) {
+    $scope.materiasprimaList = [];
+    $scope.fornecedoresList = [];
+    $scope.unidademedidaList = [];
+    $scope.sortType = "Pro_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_produto = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Produto/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_produto = response.data;
+        });
+    }
+
+    $scope.loadMateriasPrimasList = function () {
+        $http.get(window.location.origin + "/Produto/FindAllMateriaPrima", { method: "GET" }).then(function (response) {
+            $scope.materiasprimaList = response.data;
+        });
+    };
+
+    $scope.loadFornecedoresList = function () {
+        $http.get(window.location.origin + "/Pessoa/FindAllProvider", { method: "GET" }).then(function (response) {
+            $scope.fornecedoresList = response.data;
+        });
+    };
+
+    $scope.loadUnidadeMedidaList = function () {
+        $http.get(window.location.origin + "/UnidadeMedida/FindAll", { method: "GET" }).then(function (response) {
+            $scope.unidademedidaList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_produto) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/Produto/Delete",
+                    params: {
+                        id: Sts_produto.Pro_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadMateriasPrimasList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.saveMateriaPrima = function (Sts_produto) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Produto/SaveMateriaPrima",
+            params: {
+                json: Sts_produto
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_produto.Pro_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#MateriaPrima';
+            });
+        });
+    };
+
+    $scope.loadMateriasPrimasList();
+    $scope.loadFornecedoresList();
     $scope.loadUnidadeMedidaList();
 });
