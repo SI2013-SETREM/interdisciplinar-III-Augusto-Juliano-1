@@ -102,6 +102,10 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/Produto/MateriaPrimaForm',
         controller: 'produtoController',
     })
+    .when('/EditarSetorPessoas', {
+        templateUrl: '/SetorPessoas/SetorPessoasList',
+        controller: 'setorPessoasController',
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -554,4 +558,72 @@ app.controller("produtoController", function ($scope, $http, $routeParams, $loca
     $scope.loadMateriasPrimasList();
     $scope.loadFornecedoresList();
     $scope.loadUnidadeMedidaList();
+});
+
+app.controller("setorPessoasController", function ($scope, $http, $routeParams, $location) {
+    $scope.pessoasList = [];
+    $scope.pessoasSetorList = [];
+    $scope.sortType = "Pes_razaosocial";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_setor = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Setor/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_setor = response.data;
+        });
+    }
+
+    $scope.loadPessoasList = function () {
+        $http.get(window.location.origin + "/SetorPessoas/FindAllEmployees", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.pessoasList = response.data;
+        });
+    };
+
+    $scope.loadSetorPessoasList = function () {
+        $http.get(window.location.origin + "/SetorPessoas/FindAllEmployeesDepartment", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.pessoasSetorList = response.data;
+        });
+    };
+
+    $scope.save = function () {
+        debugger;
+        $http({
+            method: "POST",
+            url: window.location.origin + "/SetorPessoas/Save",
+            params: {
+                json: angular.toJson($scope.pessoasSetorList),
+                id: $scope.Sts_setor.Set_codigo
+            }
+        }).then(function (response) {
+            bootbox.alert("Registros salvos com Sucesso!", function () {
+                document.location.href = '#Setor';
+            });
+        });
+    };
+
+    $scope.shift = function () {
+        $scope.aux = [];
+        $scope.pessoasList.forEach(function (record, index) {
+            if (record.marcado) {
+                record.marcado = false;
+                $scope.pessoasSetorList.push(record);
+                $scope.pessoasList.splice(index, 1);
+            }
+        });
+
+        $scope.aux = [];
+        $scope.pessoasSetorList.forEach(function (record, index) {
+            if (record.marcado) {
+                record.marcado = false;
+                $scope.pessoasList.push(record);
+                $scope.pessoasSetorList.splice(index, 1);
+            }
+        });
+
+    };
+
+    $scope.loadPessoasList();
+    $scope.loadSetorPessoasList();
 });

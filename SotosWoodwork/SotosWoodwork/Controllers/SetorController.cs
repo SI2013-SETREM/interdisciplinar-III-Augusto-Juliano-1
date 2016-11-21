@@ -21,7 +21,6 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
-
         [HttpGet]
         public string FindAll()
         {

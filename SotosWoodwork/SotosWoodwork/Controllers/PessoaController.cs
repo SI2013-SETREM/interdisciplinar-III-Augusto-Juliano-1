@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using SotosWoodwork.Models;
 using NHibernate;
 using SotosWoodwork.Repository;
+using System.Linq;
 
 namespace SotosWoodwork.Controllers
 {
@@ -65,16 +66,9 @@ namespace SotosWoodwork.Controllers
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>();
-                IList<Sts_pessoa> listSts_cliente = new List<Sts_pessoa>();
-                for (int i = 0; i < listSts_pessoa.Count; i++)
-                {
-                    if (listSts_pessoa[i].Pes_categoria == "T")
-                    {
-                        listSts_cliente.Add(listSts_pessoa[i]);
-                    }
-                }
-                return JsonConvert.SerializeObject(listSts_cliente);
+                IList<Sts_pessoa> list = repository.ToList<Sts_pessoa>().Where(x => x.Pes_categoria == "T").ToList();
+
+                return JsonConvert.SerializeObject(list);
             }
         }
 

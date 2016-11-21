@@ -3438,6 +3438,7 @@
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
+    <Compile Include="Controllers\SetorPessoasController.cs" />
     <Compile Include="Controllers\UnidadeMedidaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3680,6 +3681,7 @@
     <Content Include="Views\Pessoa\ColaboradorForm.cshtml" />
     <Content Include="Views\Produto\MateriaPrimaList.cshtml" />
     <Content Include="Views\Produto\MateriaPrimaForm.cshtml" />
+    <Content Include="Views\SetorPessoas\SetorPessoasList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
