@@ -11,6 +11,11 @@ namespace SotosWoodwork.Controllers
 {
     public class ProdutoMateriaisController : Controller
     {
+        public ActionResult ProdutoMateriaisList()
+        {
+            return View();
+        }
+
         public string Delete(int id)
         {
             using (RepositoryBase repository = new RepositoryBase())
@@ -48,6 +53,27 @@ namespace SotosWoodwork.Controllers
             {
                 Sts_produto sts_produto = (Sts_produto)repository.GetById(typeof(Sts_produto), id);
                 return JsonConvert.SerializeObject(sts_produto);
+            }
+        }
+
+        public string Save(string json)
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                try
+                {
+                    repository.BeginTransaction();
+                    Sts_produtomateriais sts_produtomateriais = JsonConvert.DeserializeObject<Sts_produtomateriais>(json);
+                    repository.Save(sts_produtomateriais);
+
+                    return JsonConvert.SerializeObject(sts_produtomateriais);
+                }
+                catch
+                {
+                    repository.RollbackTransaction();
+
+                    return "Erro";
+                }
             }
         }
     }

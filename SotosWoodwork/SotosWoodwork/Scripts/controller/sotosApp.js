@@ -115,16 +115,16 @@ app.config(function ($routeProvider, $locationProvider) {
         controller: 'produtoController',
     })
     .when('/Produto', {
-            templateUrl: '/Produto/ProdutoList',
-            controller: 'produtoController',
+        templateUrl: '/Produto/ProdutoList',
+        controller: 'produtoController',
     })
     .when('/EditarProduto', {
-            templateUrl: '/Produto/ProdutoForm',
-            controller: 'produtoController',
+        templateUrl: '/Produto/ProdutoForm',
+        controller: 'produtoController',
     })
     .when('/AdicionarProduto', {
-            templateUrl: '/Produto/ProdutoForm',
-            controller: 'produtoController',
+        templateUrl: '/Produto/ProdutoForm',
+        controller: 'produtoController',
     })
     .when('/EditarSetorPessoas', {
         templateUrl: '/SetorPessoas/SetorPessoasList',
@@ -600,7 +600,7 @@ app.controller("produtoController", function ($scope, $http, $routeParams, $loca
             $scope.produtosList = response.data;
         });
     };
-    
+
     $scope.loadFornecedoresList = function () {
         $http.get(window.location.origin + "/Pessoa/FindAllProvider", { method: "GET" }).then(function (response) {
             $scope.fornecedoresList = response.data;
@@ -608,7 +608,7 @@ app.controller("produtoController", function ($scope, $http, $routeParams, $loca
     };
 
     $scope.loadCoresList = function () {
-        $http.get(window.location.origin + "/Cor/FindAll", { method: "GET" }).then(function(response) {
+        $http.get(window.location.origin + "/Cor/FindAll", { method: "GET" }).then(function (response) {
             $scope.coresList = response.data;
         });
     };
@@ -749,6 +749,8 @@ app.controller("produtoMateriaisController", function ($scope, $http, $routePara
     $scope.search = "";
     $scope.http = $http;
     $scope.Sts_produto = {};
+    $scope.Sts_produtomateriais = {};
+
 
     $scope.loadProdutoMateriaisList = function () {
         $http.get(window.location.origin + "/ProdutoMateriais/FindAllProdutoMateriais", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
@@ -765,9 +767,42 @@ app.controller("produtoMateriaisController", function ($scope, $http, $routePara
     $scope.loadSts_produto = function () {
         $http.get(window.location.origin + "/ProdutoMateriais/GetProduto", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
             $scope.Sts_produto = response.data;
+            $scope.Sts_produtomateriais.Sts_produto = $scope.Sts_produto;
         });
     };
 
+    $scope.delete = function (Sts_produtomateriais) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/ProdutoMateriais/Delete",
+                    params: {
+                        id: Sts_produtomateriais.Pmp_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadProdutoMateriaisList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_produtomateriais) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/ProdutoMateriais/Save",
+            params: {
+                json: Sts_produtomateriais
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_produtomateriais.Pmp_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#EditarProdutoMateriais?id=' + $routeParams.id;
+            });
+        });
+    }
     $scope.loadProdutoMateriaisList();
     $scope.loadSts_produto();
     $scope.loadMateriasPrimasList();
