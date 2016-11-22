@@ -3,57 +3,95 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Colaboradores por Setor
+                    Estrutura de Materiais do Produto
                 </h2>
             </div>
             <div class="body" ng-controller="produtoMateriaisController">
-
-                <div class="row ">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="form-line disabled">
-                                <label for="Pro_descricao">Produto</label>
-                                <input class="form-control" ng-model="Sts_produto.Pro_descricao" id="Pro_descricao" disabled>
+                <form ng-submit="save(Sts_produtomateriais);">
+                    <div class="row ">
+                        <div class="col-sm-6">
+                            <input class="form-control hidden" value="0" ng-model="Sts_produtomateriais.Pmp_codigo" id="pmp_codigo">
+                            <input class="form-control hidden" value="{{Sts_produto}}" ng-model="Sts_produtomateriais.Sts_produto" id="pro_codigo">
+                            <div class="form-group">
+                                <div class="form-line disabled">
+                                    <label for="Pro_descricao">Produto</label>
+                                    <input class="form-control" ng-model="Sts_produto.Pro_descricao" id="Pro_descricao" disabled>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <form ng-submit="save(produtoMateriaisList);">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 20px;"></th>
-                                            <th>
-                                                <a ng-click="sortType = 'Pro_descricao';sortReverse = !sortReverse">
-                                                    Matéria Prima
-                                                    <i ng-show="sortType === 'Pro_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                    <i ng-show="sortType === 'Pro_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
-                                                </a>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-show="produtoMateriaisList.length === 0 && http.pendingRequests.length == 0">
-                                            <td colspan="1000">Nenhum registro encontrado :(</td>
-                                        </tr>
-                                        <tr ng-repeat="Sts_produtomateriais in produtoMateriaisList| orderBy:sortType:sortReverse | filter:search">
-                                            <td>{{Sts_produtomateriais.Sts_materiaprima}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <label for="Pro_materiaprima">Matéria Prima</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select id="Pro_materiaprima" class="form-control" ng-model="Sts_produtomateriais.Sts_materiaprima" ng-options="Sts_materiaprima.Pro_descricao for Sts_materiaprima in materiasprimaList track by Sts_materiaprima.Pro_codigo"></select>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 pull-right">
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
-                            <a class="btn btn-default m-t-15 waves-effect" href="#Produto">Cancelar</a>
+                            <label for="Pmp_quantidade">Quantidade</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="number" step="0.01" class="form-control" ng-model="Sts_produtomateriais.Pmp_quantidade" id="Pmp_quantidade">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pull-right">
+                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">Inserir</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <a ng-click="sortType = 'Pro_descricao';sortReverse = !sortReverse">
+                                                Matéria Prima
+                                                <i ng-show="sortType === 'Pro_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pro_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Pmp_quantidade';sortReverse = !sortReverse">
+                                                Quantidade
+                                                <i ng-show="sortType === 'Pmp_quantidade' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pmp_quantidade' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Unm_descricao';sortReverse = !sortReverse">
+                                                Unidade de Medida
+                                                <i ng-show="sortType === 'Unm_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Unm_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th class="col-button-header">Excluir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="produtoMateriaisList.length === 0 && http.pendingRequests.length == 0">
+                                        <td colspan="1000">Nenhum registro encontrado :(</td>
+                                    </tr>
+                                    <tr ng-repeat="Sts_produtomateriais in produtoMateriaisList| orderBy:sortType:sortReverse | filter:search">
+                                        <td>{{Sts_produtomateriais.Sts_materiaprima.Pro_descricao}}</td>
+                                        <td>{{Sts_produtomateriais.Pmp_quantidade}}</td>
+                                        <td>{{Sts_produtomateriais.Sts_materiaprima.Sts_unidademedida.Unm_sigla + ' - ' + Sts_produtomateriais.Sts_materiaprima.Sts_unidademedida.Unm_descricao}}</td>
+                                        <td class="text-center">
+                                            <a ng-click="delete(Sts_produtomateriais);">
+                                                <i class="material-icons col-pink">remove_circle</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 pull-right">
+                        <a class="btn btn-default m-t-15 waves-effect" href="#Produto">Voltar</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

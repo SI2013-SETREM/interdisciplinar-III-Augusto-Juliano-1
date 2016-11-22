@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using System;
 
 namespace SotosWoodwork.Models
 {
@@ -8,7 +9,7 @@ namespace SotosWoodwork.Models
         public virtual Sts_produto Sts_produto { get; set; }
         public virtual Sts_maquina Sts_maquina { get; set; }
         public virtual Sts_setorpessoas Sts_setorpessoas { get; set; }
-        public virtual decimal Ppc_tempoproducao { get; set; }
+        public virtual DateTime Ppc_tempoproducao { get; set; }
         public virtual string Ppc_descricao { get; set; }
     }
 

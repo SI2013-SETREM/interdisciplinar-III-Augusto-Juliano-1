@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using SotosWoodwork.Repository;
 using SotosWoodwork.Models;
+using SotosWoodwork.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,9 @@ using System.Web.Mvc;
 
 namespace SotosWoodwork.Controllers
 {
-    public class ProdutoMateriaisController : Controller
+    public class ProdutoProcessosController : Controller
     {
-        public ActionResult ProdutoMateriaisList()
+        public ActionResult ProdutoProcessosList()
         {
             return View();
         }
@@ -23,10 +23,10 @@ namespace SotosWoodwork.Controllers
                 try
                 {
                     repository.BeginTransaction();
-                    Sts_produtomateriais sts_produtomateriais = (Sts_produtomateriais)repository.GetById(typeof(Sts_produtomateriais), id);
-                    repository.Delete(sts_produtomateriais);
+                    Sts_produtoprocessos sts_produtoprocessos = (Sts_produtoprocessos)repository.GetById(typeof(Sts_produtoprocessos), id);
+                    repository.Delete(sts_produtoprocessos);
 
-                    return JsonConvert.SerializeObject(sts_produtomateriais);
+                    return JsonConvert.SerializeObject(sts_produtoprocessos);
                 }
                 catch
                 {
@@ -37,11 +37,11 @@ namespace SotosWoodwork.Controllers
             }
         }
 
-        public string FindAllProdutoMateriais(int id)
+        public string FindAllProdutoProcessos(int id)
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                IList<Sts_produtomateriais> list = repository.ToList<Sts_produtomateriais>().Where(x => x.Sts_produto.Pro_codigo == id).ToList();
+                IList<Sts_produtoprocessos> list = repository.ToList<Sts_produtoprocessos>().Where(x => x.Sts_produto.Pro_codigo == id).ToList();
                 return JsonConvert.SerializeObject(list);
             }
         }
@@ -56,6 +56,7 @@ namespace SotosWoodwork.Controllers
             }
         }
 
+
         public string Save(string json)
         {
             using (RepositoryBase repository = new RepositoryBase())
@@ -63,10 +64,10 @@ namespace SotosWoodwork.Controllers
                 try
                 {
                     repository.BeginTransaction();
-                    Sts_produtomateriais sts_produtomateriais = JsonConvert.DeserializeObject<Sts_produtomateriais>(json);
-                    repository.Save(sts_produtomateriais);
+                    Sts_produtoprocessos sts_produtoprocessos = JsonConvert.DeserializeObject<Sts_produtoprocessos>(json);
+                    repository.Save(sts_produtoprocessos);
 
-                    return JsonConvert.SerializeObject(sts_produtomateriais);
+                    return JsonConvert.SerializeObject(sts_produtoprocessos);
                 }
                 catch
                 {

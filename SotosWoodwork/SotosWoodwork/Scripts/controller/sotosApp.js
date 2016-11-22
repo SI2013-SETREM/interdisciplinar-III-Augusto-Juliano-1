@@ -134,18 +134,9 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/ProdutoMateriais/ProdutoMateriaisList',
         controller: 'produtoMateriaisController',
     })
-
-    .when('/Orcamento', {
-        templateUrl: '/Orcamento/OrcamentoList',
-        controller: 'orcamentoController',
-    })
-    .when('/EditarOrcamento', {
-        templateUrl: '/Orcamento/OrcamentoForm',
-        controller: 'orcamentoController',
-    })
-    .when('/AdicionarOrcamento', {
-        templateUrl: '/Orcamento/OrcamentoForm',
-        controller: 'orcamentoController',
+    .when('/EditarProdutoProcessos', {
+                templateUrl: '/ProdutoProcessos/ProdutoProcessosList',
+                controller: 'produtoProcessosController',
     })
     .otherwise({ redirectTo: '/' });
 });
@@ -613,7 +604,7 @@ app.controller("produtoController", function ($scope, $http, $routeParams, $loca
             $scope.produtosList = response.data;
         });
     };
-    
+
     $scope.loadFornecedoresList = function () {
         $http.get(window.location.origin + "/Pessoa/FindAllProvider", { method: "GET" }).then(function (response) {
             $scope.fornecedoresList = response.data;
@@ -621,7 +612,7 @@ app.controller("produtoController", function ($scope, $http, $routeParams, $loca
     };
 
     $scope.loadCoresList = function () {
-        $http.get(window.location.origin + "/Cor/FindAll", { method: "GET" }).then(function(response) {
+        $http.get(window.location.origin + "/Cor/FindAll", { method: "GET" }).then(function (response) {
             $scope.coresList = response.data;
         });
     };
@@ -714,6 +705,7 @@ app.controller("setorPessoasController", function ($scope, $http, $routeParams, 
     };
 
     $scope.save = function () {
+        debugger;
         $http({
             method: "POST",
             url: window.location.origin + "/SetorPessoas/Save",
@@ -761,6 +753,8 @@ app.controller("produtoMateriaisController", function ($scope, $http, $routePara
     $scope.search = "";
     $scope.http = $http;
     $scope.Sts_produto = {};
+    $scope.Sts_produtomateriais = {};
+
 
     $scope.loadProdutoMateriaisList = function () {
         $http.get(window.location.origin + "/ProdutoMateriais/FindAllProdutoMateriais", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
@@ -777,10 +771,119 @@ app.controller("produtoMateriaisController", function ($scope, $http, $routePara
     $scope.loadSts_produto = function () {
         $http.get(window.location.origin + "/ProdutoMateriais/GetProduto", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
             $scope.Sts_produto = response.data;
+            $scope.Sts_produtomateriais.Sts_produto = $scope.Sts_produto;
         });
     };
 
+    $scope.delete = function (Sts_produtomateriais) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/ProdutoMateriais/Delete",
+                    params: {
+                        id: Sts_produtomateriais.Pmp_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadProdutoMateriaisList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_produtomateriais) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/ProdutoMateriais/Save",
+            params: {
+                json: Sts_produtomateriais
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_produtomateriais.Pmp_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#EditarProdutoMateriais?id=' + $routeParams.id;
+            });
+        });
+    }
     $scope.loadProdutoMateriaisList();
     $scope.loadSts_produto();
     $scope.loadMateriasPrimasList();
+});
+
+app.controller("produtoProcessosController", function ($scope, $http, $routeParams, $location) {
+    $scope.produtoProcessosList = [];
+    $scope.maquinasList = [];
+    $scope.setorPessoasList = [];
+    $scope.sortType = "Pro_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_produto = {};
+    $scope.Sts_produtoprocessos = {};
+
+
+    $scope.loadProdutoProcessosList = function () {
+        $http.get(window.location.origin + "/ProdutoProcessos/FindAllProdutoProcessos", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.produtoProcessosList = response.data;
+        });
+    };
+
+    $scope.loadMaquinasList = function () {
+        $http.get(window.location.origin + "/Maquina/FindAll", { method: "GET" }).then(function (response) {
+            $scope.maquinasList = response.data;
+        });
+    };
+
+    $scope.loadSetorPessoasList = function () {
+        $http.get(window.location.origin + "/SetorPessoas/FindAll", { method: "GET" }).then(function (response) {
+            $scope.setorPessoasList = response.data;
+        });
+    };
+
+    $scope.loadSts_produto = function () {
+        $http.get(window.location.origin + "/ProdutoProcessos/GetProduto", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_produto = response.data;
+            $scope.Sts_produtoprocessos.Sts_produto = $scope.Sts_produto;
+        });
+    };
+
+    $scope.delete = function (Sts_produtoprocessos) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/ProdutoProcessos/Delete",
+                    params: {
+                        id: Sts_produtoprocessos.Ppc_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadProdutoProcessosList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.saveProcessos = function (Sts_produtoprocessos) {
+        debugger;
+        $http({
+            method: "GET",
+            url: window.location.origin + "/ProdutoProcessos/Save",
+            params: {
+                json: Sts_produtoprocessos
+            }
+        }).then(function (response) {
+            bootbox.alert("Arerererere Inter vai jogar a serie B!! Registro " + (Sts_produtoprocessos.Ppc_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#EditarProdutoProcessos?id=' + $routeParams.id;
+            });
+        });
+    }
+    $scope.loadProdutoProcessosList();
+    $scope.loadSts_produto();
+    $scope.loadMaquinasList();
+    $scope.loadSetorPessoasList();
 });
