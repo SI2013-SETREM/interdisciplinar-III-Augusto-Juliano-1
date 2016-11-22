@@ -3439,6 +3439,7 @@
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\ProdutoMateriaisController.cs" />
+    <Compile Include="Controllers\ProdutoProcessosController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
     <Compile Include="Controllers\SetorPessoasController.cs" />
     <Compile Include="Controllers\UnidadeMedidaController.cs" />
@@ -3691,6 +3692,7 @@
     <Content Include="Views\Cor\CorForm.cshtml" />
     <Content Include="Views\Cor\CorList.cshtml" />
     <Content Include="Views\ProdutoMateriais\ProdutoMateriaisList.cshtml" />
+    <Content Include="Views\ProdutoProcessos\ProdutoProcessosList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

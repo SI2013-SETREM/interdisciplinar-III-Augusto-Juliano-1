@@ -16,6 +16,16 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
+        [HttpGet]
+        public string FindAll()
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                IList<Sts_setorpessoas> listSts_setorpessoas = repository.ToList<Sts_setorpessoas>();
+                return JsonConvert.SerializeObject(listSts_setorpessoas);
+            }
+        }
+
         public string FindAllEmployees(int id)
         {
             using (RepositoryBase repository = new RepositoryBase())
