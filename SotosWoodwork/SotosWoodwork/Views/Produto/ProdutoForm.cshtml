@@ -20,14 +20,14 @@
                 </h2>
             </div>
             <div class="body">
-                <form role="form" name="form" ng-submit="saveMateriaPrima(Sts_produto);">
+                <form role="form" name="form" ng-submit="saveProduto(Sts_produto);">
 
-                    <input class="form-control hidden" value="M" ng-model="Sts_produto.Pro_tipo" id="pro_tipo">
+                    <input class="form-control hidden" value="P" ng-model="Sts_produto.Pro_tipo" id="pro_tipo">
                     <input class="form-control hidden" value="0" ng-model="Sts_produto.Pro_codigo" id="pro_codigo">
 
                     <h4> Informações Gerais</h4>
                     <br />
-                    <label for="Pro_codigofabrica">Código do Fabricante</label>
+                    <label for="Pro_codigofabrica">Código do Produto</label>
                     <div class="form-group">
                         <div class="form-line">
                             <input class="form-control" ng-model="Sts_produto.Pro_codigofabrica" id="Pes_razaosocial">
@@ -48,17 +48,10 @@
                         </div>
                     </div>
 
-                    <label for="Pes_codigo">Fornecedor Primário</label>
-                    <div class="form-group required">
-                        <div class="form-line">
-                            <select id="Pes_codigo" class="form-control" ng-model="Sts_produto.Sts_pessoa" ng-options="Sts_pessoa.Pes_razaosocial for Sts_pessoa in fornecedoresList track by Sts_pessoa.Pes_codigo" required></select>
-                        </div>
-                    </div>
-
-                    <label for="Pro_valorcusto">Valor de Compra</label>
+                    <label for="Pro_valorvenda">Valor de Venda</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <input type="number" step="0.01" class="form-control" ng-model="Sts_produto.Pro_valorcusto" id="Pro_valorcusto">
+                            <input type="number" step="0.01" class="form-control" ng-model="Sts_produto.Pro_valorvenda" id="Pro_valorvenda">
                         </div>
                     </div>
 
@@ -82,15 +75,15 @@
                             <input type="number" step="0.01" class="form-control" ng-model="Sts_produto.Pro_profundidade" id="Pro_profundidade">
                         </div>
                     </div>
+
                     <label for="Unm_codigo">Unidade de Medida<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
                             <select id="Unm_codigo" class="form-control" ng-model="Sts_produto.Sts_unidademedida" ng-options="Sts_unidademedida.Unm_descricao + ' | ' + Sts_unidademedida.Unm_sigla for Sts_unidademedida in unidademedidaList track by Sts_unidademedida.Unm_codigo" required></select>
                         </div>
                     </div>
-
                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
-                    <a class="btn btn-default m-t-15 waves-effect" href="#MateriaPrima">Cancelar</a>
+                    <a class="btn btn-default m-t-15 waves-effect" href="#Produto">Cancelar</a>
                 </form>
             </div>
         </div>

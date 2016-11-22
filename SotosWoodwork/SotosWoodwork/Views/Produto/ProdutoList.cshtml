@@ -1,4 +1,4 @@
-﻿<a href="#AdicionarMateriaPrima" style="border-radius: 50%; position: fixed !important; bottom: 20px; right: 20px; z-index: 99999998;" class="btn bg-blue btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons">add</i></a>
+﻿<a href="#AdicionarProduto" style="border-radius: 50%; position: fixed !important; bottom: 20px; right: 20px; z-index: 99999998;" class="btn bg-blue btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons">add</i></a>
 
 <!-- Page Loader -->
 <div class="page-loader-wrapper" ng-show="http.pendingRequests.length > 0">
@@ -18,7 +18,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Listagem de Matérias Primas
+                    Listagem de Produtos de Venda
                 </h2>
             </div>
             <div class="body" ng-controller="produtoController">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="col-lg-1 text-right">
-                        <div class="btn btn-primary" ng-click="loadMateriasPrimasList()">
+                        <div class="btn btn-primary" ng-click="loadProdutosList()">
                             <i class="material-icons">refresh</i>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                                     <tr>
                                         <th>
                                             <a ng-click="sortType = 'Pro_codigofabrica';sortReverse = !sortReverse">
-                                                Código do Fabricante
+                                                Código do Produto
                                                 <i ng-show="sortType === 'Pro_codigofabrica' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
                                                 <i ng-show="sortType === 'Pro_codigofabrica' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
@@ -81,37 +81,41 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a ng-click="sortType = 'pro_valorcusto';sortReverse = !sortReverse">
-                                                Valor de Compra
-                                                <i ng-show="sortType === 'pro_valorcusto' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'pro_valorcusto' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            <a ng-click="sortType = 'pro_valorvenda';sortReverse = !sortReverse">
+                                                Valor de Venda
+                                                <i ng-show="sortType === 'pro_valorvenda' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'pro_valorvenda' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
-                                        </th>
-                                        <th>
-                                            <a ng-click="sortType = 'pro_valorcusto';sortReverse = !sortReverse">
-                                                Cadastrado em
-                                                <i ng-show="sortType === 'pro_valorcusto' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'pro_valorcusto' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
-                                            </a>
-                                        </th>
+                                        </th>   
+                                        <th>Processos</th>
+                                        <th>Estrutura</th>
                                         <th class="col-button-header">Editar</th>
                                         <th class="col-button-header">Excluir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-show="materiasprimaList.length === 0 && http.pendingRequests.length == 0">
+                                    <tr ng-show="produtosList.length === 0 && http.pendingRequests.length == 0">
                                         <td colspan="1000">Nenhum registro encontrado :(</td>
                                     </tr>
-                                    <tr ng-repeat="Sts_produto in materiasprimaList| orderBy:sortType:sortReverse | filter:search">
+                                    <tr ng-repeat="Sts_produto in produtosList| orderBy:sortType:sortReverse | filter:search">
                                         <td>{{Sts_produto.Pro_codigofabrica}}</td>
                                         <td>{{Sts_produto.Pro_descricao}}</td>
                                         <td>{{Sts_produto.Sts_cor.Cor_descricao}}</td>
                                         <td>{{Sts_produto.Pro_altura != '' ? Sts_produto.Pro_altura + 'x' + Sts_produto.Pro_largura + 'x' + Sts_produto.Pro_profundidade : ''}}</td>
                                         <td>{{Sts_produto.Sts_unidademedida.Unm_sigla + ' - ' + Sts_produto.Sts_unidademedida.Unm_descricao}}</td>
-                                        <td>{{'R$ ' + Sts_produto.Pro_valorcusto}}</td>
-                                        <td>{{Sts_produto.Pro_datacadastro}}</td>
+                                        <td>{{'R$ ' + Sts_produto.Pro_valorvenda}}</td>
                                         <td class="text-center">
-                                            <a href="#EditarMateriaPrima?id={{Sts_produto.Pro_codigo}}" ng-click="$scope.model = Sts_produto;">
+                                            <a href="#?id={{Sts_produto.Pro_codigo}}" ng-click="$scope.model = Sts_produto;">
+                                                <i class="material-icons col-blue">explore</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#EditarProdutoMateriais?id={{Sts_produto.Pro_codigo}}" ng-click="$scope.model = Sts_produto;">
+                                                <i class="material-icons col-blue">flip_to_front</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#EditarProduto?id={{Sts_produto.Pro_codigo}}" ng-click="$scope.model = Sts_produto;">
                                                 <i class="material-icons col-blue">create</i>
                                             </a>
                                         </td>

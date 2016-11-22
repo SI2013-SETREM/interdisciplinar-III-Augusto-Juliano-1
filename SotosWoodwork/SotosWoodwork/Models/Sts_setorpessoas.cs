@@ -11,8 +11,6 @@ namespace SotosWoodwork.Models
         public virtual int Stp_codigo { get; set; }
         public virtual Sts_pessoa Sts_pessoa { get; set; }
         public virtual Sts_setor Sts_setor { get; set; }
-        public virtual string Stp_ativo { get; set; }
-        public virtual string Stp_salario { get; set; }
     }
 
     public class Sts_setorpessoasMap : ClassMap<Sts_setorpessoas>
@@ -22,8 +20,6 @@ namespace SotosWoodwork.Models
             Id(x => x.Stp_codigo).GeneratedBy.Sequence("stp_codigo");
             References(x => x.Sts_pessoa, "pes_codigo").Not.LazyLoad();
             References(x => x.Sts_setor, "set_codigo").Not.LazyLoad();
-            Map(x => x.Stp_ativo);
-            Map(x => x.Stp_salario);
 
             Table("sts_setorpessoas");
         }

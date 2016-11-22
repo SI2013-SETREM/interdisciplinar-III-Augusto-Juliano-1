@@ -21,7 +21,7 @@ namespace SotosWoodwork.Repository
                         .ConnectionString("Server=localhost;Port=5432;Database=SotosWoodwork;User Id=postgres;Password=admin;"))
                         .Mappings(c => c.FluentMappings.AddFromAssemblyOf<Models.Sts_pessoaMap>())// Não precisa adicionar tudo as merdas de mapeamento aqui
                                                                                                   // o fluent sabe de onde pegar, por estarem todos no mesmo path  
-                        //.ExposeConfiguration(x => new SchemaExport(x).Create(false, true))      
+                        .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true))
                         .BuildSessionFactory();
                     
                     // Essa merda aqui é outra forma de configurar, acho que nem ta funcionando

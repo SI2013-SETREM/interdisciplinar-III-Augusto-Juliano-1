@@ -48,16 +48,8 @@ namespace SotosWoodwork.Controllers
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>();
-                IList<Sts_pessoa> listSts_cliente = new List<Sts_pessoa>();
-                for (int i = 0; i < listSts_pessoa.Count; i++)
-                {
-                    if (listSts_pessoa[i].Pes_categoria == "C")
-                    {
-                        listSts_cliente.Add(listSts_pessoa[i]);
-                    }
-                }
-                return JsonConvert.SerializeObject(listSts_cliente);
+                IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>().Where(x => x.Pes_categoria == "C").ToList();
+                return JsonConvert.SerializeObject(listSts_pessoa);
             }
         }
 
@@ -77,16 +69,9 @@ namespace SotosWoodwork.Controllers
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                IList<Sts_pessoa> listSts_pessoa = repository.ToList<Sts_pessoa>();
-                IList<Sts_pessoa> listSts_fornecedor = new List<Sts_pessoa>();
-                for (int i = 0; i < listSts_pessoa.Count; i++)
-                {
-                    if (listSts_pessoa[i].Pes_categoria == "F")
-                    {
-                        listSts_fornecedor.Add(listSts_pessoa[i]);
-                    }
-                }
-                return JsonConvert.SerializeObject(listSts_fornecedor);
+                IList<Sts_pessoa> list = repository.ToList<Sts_pessoa>().Where(x => x.Pes_categoria == "F").ToList();
+
+                return JsonConvert.SerializeObject(list);
             }
         }
 

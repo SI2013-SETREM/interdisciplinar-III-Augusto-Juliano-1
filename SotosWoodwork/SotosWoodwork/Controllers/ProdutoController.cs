@@ -21,12 +21,32 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
+        public ActionResult ProdutoList()
+        {
+            return View();
+        }
+
+        public ActionResult ProdutoForm()
+        {
+            return View();
+        }
+
         [HttpGet]
         public string FindAllMateriaPrima()
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                IList<Sts_produto> listSts_produto = repository.ToList<Sts_produto>();
+                IList<Sts_produto> listSts_produto = repository.ToList<Sts_produto>().Where(x => x.Pro_tipo == "M").ToList();
+                return JsonConvert.SerializeObject(listSts_produto);
+            }
+        }
+
+        [HttpGet]
+        public string FindAllProdutos()
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                IList<Sts_produto> listSts_produto = repository.ToList<Sts_produto>().Where(x => x.Pro_tipo == "P").ToList();
                 return JsonConvert.SerializeObject(listSts_produto);
             }
         }
@@ -73,6 +93,30 @@ namespace SotosWoodwork.Controllers
                     if (sts_produto.Pro_codigo == 0)
                         sts_produto.Pro_datacadastro = DateTime.Now;
                     sts_produto.Pro_tipo = "M";
+                    repository.Save(sts_produto);
+
+                    return JsonConvert.SerializeObject(sts_produto);
+                }
+                catch
+                {
+                    repository.RollbackTransaction();
+
+                    return "Erro";
+                }
+            }
+        }
+
+        public string SaveProduto(string json)
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                try
+                {
+                    repository.BeginTransaction();
+                    Sts_produto sts_produto = JsonConvert.DeserializeObject<Sts_produto>(json);
+                    if (sts_produto.Pro_codigo == 0)
+                        sts_produto.Pro_datacadastro = DateTime.Now;
+                    sts_produto.Pro_tipo = "P";
                     repository.Save(sts_produto);
 
                     return JsonConvert.SerializeObject(sts_produto);

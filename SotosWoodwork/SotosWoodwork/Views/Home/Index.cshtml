@@ -172,7 +172,7 @@
                                 </li>
                                 <li ng-click="activetab = 'maquinas';" ng-class="{'active' : activetab === 'maquinas'}">
                                     <a href="#Maquina">
-                                        <i class="material-icons">settings_applications</i>
+                                        <i class="material-icons">build</i>
                                         <span>Máquinas</span>
                                     </a>
                                 </li>
@@ -187,19 +187,25 @@
                         <li>
                             <a href="javascript:void(0);" class="menu-toggle">
                                 <i class="material-icons">settings</i>
-                                <span>Configurações Gerais</span>
+                                <span>Cadastros Gerais</span>
                             </a>
                             <ul class="ml-menu">
-                                <li ng-click="activetab = 'UnidadeMedida';" ng-class="{'active' : activetab === 'UnidadeMedida'}">
-                                    <a href="#UnidadeMedida">
-                                        <i class="material-icons">widgets</i>
-                                        <span>Unidades de Medida</span>
+                                <li>
+                                    <a href="#Cor">
+                                        <i class="material-icons">palette</i>
+                                        <span>Cores</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#Grupo">
-                                        <i class="material-icons">pregnant_woman</i>
+                                        <i class="material-icons">group</i>
                                         <span>Grupos de Clientes</span>
+                                    </a>
+                                </li>
+                                <li ng-click="activetab = 'UnidadeMedida';" ng-class="{'active' : activetab === 'UnidadeMedida'}">
+                                    <a href="#UnidadeMedida">
+                                        <i class="material-icons">widgets</i>
+                                        <span>Unidades de Medida</span>
                                     </a>
                                 </li>
                             </ul>

@@ -1,14 +1,14 @@
-﻿<a href="#AdicionarGrupo" style="border-radius: 50%; position: fixed !important; bottom: 20px; right: 20px; z-index: 999999998;" class="btn bg-blue btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons">add</i></a>
+﻿<a href="#AdicionarCor" style="border-radius: 50%; position: fixed !important; bottom: 20px; right: 20px; z-index: 999999998;" class="btn bg-blue btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons">add</i></a>
 
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="header">
                 <h2>
-                    Listagem de Grupos de Clientes
+                    Listagem de Cores
                 </h2>
             </div>
-            <div class="body" ng-controller="grupoController">
+            <div class="body" ng-controller="corController">
                 <div class="row form-horizontal">
                     <div class="col-lg-11">
                         <div class="input-group">
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="col-lg-1 text-right">
-                        <div class="btn btn-primary" ng-click="loadGruposList()">
+                        <div class="btn btn-primary" ng-click="loadCoresList()">
                             <i class="material-icons">refresh</i>
                         </div>
                     </div>
@@ -33,24 +33,17 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <a ng-click="sortType = 'Grp_descricao';sortReverse = !sortReverse">
+                                            <a ng-click="sortType = 'Cor_codigocor';sortReverse = !sortReverse">
+                                                Código Cor
+                                                <i ng-show="sortType === 'Cor_codigocor' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Cor_codigocor' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Cor_descricao';sortReverse = !sortReverse">
                                                 Descrição
-                                                <i ng-show="sortType === 'Grp_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'Grp_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            <a ng-click="sortType = 'Grp_descontofixo';sortReverse = !sortReverse">
-                                                Desconto Padrão
-                                                <i ng-show="sortType === 'Grp_descontofixo' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'Grp_descontofixo' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
-                                            </a>
-                                        </th>
-                                        <th>
-                                            <a ng-click="sortType = 'Grp_status';sortReverse = !sortReverse">
-                                                Situação
-                                                <i ng-show="sortType === 'Grp_status' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'Grp_status' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                                <i ng-show="sortType === 'Cor_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Cor_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
                                         </th>
                                         <th class="col-button-header">Editar</th>
@@ -58,20 +51,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-show="gruposList.length === 0 && http.pendingRequests.length == 0">
+                                    <tr ng-show="coresList.length === 0 && http.pendingRequests.length == 0">
                                         <td colspan="1000">Nenhum registro encontrado :(</td>
                                     </tr>
-                                    <tr ng-repeat="Sts_grupo in gruposList| orderBy:sortType:sortReverse | filter:search">
-                                        <td>{{Sts_grupo.Grp_descricao}}</td>
-                                        <td>{{Sts_grupo.Grp_descontofixo + '%'}}</td>
-                                        <td>{{Sts_grupo.Grp_status == true ? 'Ativo' : 'Inativo'}}</td>
+                                    <tr ng-repeat="Sts_cor in coresList| orderBy:sortType:sortReverse | filter:search">
+                                        <td>{{Sts_cor.Cor_codigocor}}</td>
+                                        <td>{{Sts_cor.Cor_descricao}}</td>
                                         <td class="text-center">
-                                            <a href="#EditarGrupo?id={{Sts_grupo.Grp_codigo}}" ng-click="$scope.model = Sts_setor;">
+                                            <a href="#EditarCor?id={{Sts_cor.Cor_codigo}}" ng-click="$scope.model = Sts_cor;">
                                                 <i class="material-icons col-blue">create</i>
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <a ng-click="delete(Sts_grupo);">
+                                            <a ng-click="delete(Sts_cor);">
                                                 <i class="material-icons col-pink">remove_circle</i>
                                             </a>
                                         </td>

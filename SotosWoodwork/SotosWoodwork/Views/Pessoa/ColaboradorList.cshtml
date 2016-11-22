@@ -67,6 +67,13 @@
                                             </a>
                                         </th>
                                         <th>
+                                            <a ng-click="sortType = 'Pes_salario';sortReverse = !sortReverse">
+                                                Salário
+                                                <i ng-show="sortType === 'Pes_salario' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pes_salario' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
                                             <a ng-click="sortType = 'Pes_situacao';sortReverse = !sortReverse">
                                                 Ativo?
                                                 <i ng-show="sortType === 'Pes_situacao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
@@ -85,6 +92,7 @@
                                         <td>{{Sts_pessoa.Pes_razaosocial}}</td>
                                         <td>{{Sts_pessoa.Pes_cpfcnpj}}</td>
                                         <td>{{Sts_pessoa.Pes_telefone}}</td>
+                                        <td>{{'R$ ' + Sts_pessoa.Pes_salario}}</td>
                                         <td>{{Sts_pessoa.Pes_situacao == true ? "Sim" : "Não"}}</td>
                                         <td class="text-center">
                                             <a href="#EditarColaborador?id={{Sts_pessoa.Pes_codigo}}" ng-click="$scope.model = Sts_pessoa;">

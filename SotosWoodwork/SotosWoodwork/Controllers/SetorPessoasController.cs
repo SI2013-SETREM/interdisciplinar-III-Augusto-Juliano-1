@@ -23,7 +23,7 @@ namespace SotosWoodwork.Controllers
                 IList<Sts_pessoa> list = repository.ToList<Sts_pessoa>()
                     .Where(x => !repository.ToList<Sts_setorpessoas>()
                             .Where(xy => xy.Sts_pessoa.Pes_codigo == x.Pes_codigo && xy.Sts_setor.Set_codigo == id).Any()
-                    ).ToList();
+                    ).Where(x => x.Pes_categoria == "T").ToList();
 
                 return JsonConvert.SerializeObject(list);
             }

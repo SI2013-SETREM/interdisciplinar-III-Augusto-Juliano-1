@@ -66,6 +66,18 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/Grupo/GrupoForm',
         controller: 'grupoController',
     })
+    .when('/Cor', {
+        templateUrl: '/Cor/CorList',
+        controller: 'corController',
+    })
+    .when('/EditarCor', {
+        templateUrl: '/Cor/CorForm',
+        controller: 'corController',
+    })
+    .when('/AdicionarCor', {
+        templateUrl: '/Cor/CorForm',
+        controller: 'corController',
+    })
     .when('/Fornecedor', {
         templateUrl: '/Pessoa/FornecedorList',
         controller: 'pessoaController',
@@ -102,9 +114,25 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/Produto/MateriaPrimaForm',
         controller: 'produtoController',
     })
+    .when('/Produto', {
+            templateUrl: '/Produto/ProdutoList',
+            controller: 'produtoController',
+    })
+    .when('/EditarProduto', {
+            templateUrl: '/Produto/ProdutoForm',
+            controller: 'produtoController',
+    })
+    .when('/AdicionarProduto', {
+            templateUrl: '/Produto/ProdutoForm',
+            controller: 'produtoController',
+    })
     .when('/EditarSetorPessoas', {
         templateUrl: '/SetorPessoas/SetorPessoasList',
         controller: 'setorPessoasController',
+    })
+    .when('/EditarProdutoMateriais', {
+        templateUrl: '/ProdutoMateriais/ProdutoMateriaisList',
+        controller: 'produtoMateriaisController',
     })
     .otherwise({ redirectTo: '/' });
 });
@@ -433,6 +461,61 @@ app.controller("grupoController", function ($scope, $http, $routeParams, $locati
     $scope.loadGruposList();
 });
 
+app.controller("corController", function ($scope, $http, $routeParams, $location) {
+    $scope.coresList = [];
+    $scope.sortType = "Cor_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_cor = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Cor/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_cor = response.data;
+        });
+    }
+
+    $scope.loadCoresList = function () {
+        $http.get(window.location.origin + "/Cor/FindAll", { method: "GET" }).then(function (response) {
+            $scope.coresList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_cor) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/Cor/Delete",
+                    params: {
+                        id: Sts_cor.Cor_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadCoresList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_cor) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Cor/Save",
+            params: {
+                json: Sts_cor
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_cor.Cor_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Cor';
+            });
+        });
+    };
+
+    $scope.loadCoresList();
+});
+
 app.controller("unidademedidaController", function ($scope, $http, $routeParams, $location) {
     $scope.unidademedidaList = [];
     $scope.sortType = "Unm_sigla";
@@ -490,8 +573,10 @@ app.controller("unidademedidaController", function ($scope, $http, $routeParams,
 
 app.controller("produtoController", function ($scope, $http, $routeParams, $location) {
     $scope.materiasprimaList = [];
+    $scope.produtosList = [];
     $scope.fornecedoresList = [];
     $scope.unidademedidaList = [];
+    $scope.coresList = [];
     $scope.sortType = "Pro_descricao";
     $scope.sortReverse = false;
     $scope.search = "";
@@ -510,9 +595,21 @@ app.controller("produtoController", function ($scope, $http, $routeParams, $loca
         });
     };
 
+    $scope.loadProdutosList = function () {
+        $http.get(window.location.origin + "/Produto/FindAllProdutos", { method: "GET" }).then(function (response) {
+            $scope.produtosList = response.data;
+        });
+    };
+    
     $scope.loadFornecedoresList = function () {
         $http.get(window.location.origin + "/Pessoa/FindAllProvider", { method: "GET" }).then(function (response) {
             $scope.fornecedoresList = response.data;
+        });
+    };
+
+    $scope.loadCoresList = function () {
+        $http.get(window.location.origin + "/Cor/FindAll", { method: "GET" }).then(function(response) {
+            $scope.coresList = response.data;
         });
     };
 
@@ -555,9 +652,25 @@ app.controller("produtoController", function ($scope, $http, $routeParams, $loca
         });
     };
 
+    $scope.saveProduto = function (Sts_produto) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Produto/SaveProduto",
+            params: {
+                json: Sts_produto
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_produto.Pro_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Produto';
+            });
+        });
+    };
+
     $scope.loadMateriasPrimasList();
     $scope.loadFornecedoresList();
     $scope.loadUnidadeMedidaList();
+    $scope.loadCoresList();
+    $scope.loadProdutosList();
 });
 
 app.controller("setorPessoasController", function ($scope, $http, $routeParams, $location) {
@@ -626,4 +739,36 @@ app.controller("setorPessoasController", function ($scope, $http, $routeParams, 
 
     $scope.loadPessoasList();
     $scope.loadSetorPessoasList();
+});
+
+app.controller("produtoMateriaisController", function ($scope, $http, $routeParams, $location) {
+    $scope.produtoMateriaisList = [];
+    $scope.materiasprimaList = [];
+    $scope.sortType = "Pro_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_produto = {};
+
+    $scope.loadProdutoMateriaisList = function () {
+        $http.get(window.location.origin + "/ProdutoMateriais/FindAllProdutoMateriais", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.produtoMateriaisList = response.data;
+        });
+    };
+
+    $scope.loadMateriasPrimasList = function () {
+        $http.get(window.location.origin + "/Produto/FindAllMateriaPrima", { method: "GET" }).then(function (response) {
+            $scope.materiasprimaList = response.data;
+        });
+    };
+
+    $scope.loadSts_produto = function () {
+        $http.get(window.location.origin + "/ProdutoMateriais/GetProduto", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_produto = response.data;
+        });
+    };
+
+    $scope.loadProdutoMateriaisList();
+    $scope.loadSts_produto();
+    $scope.loadMateriasPrimasList();
 });

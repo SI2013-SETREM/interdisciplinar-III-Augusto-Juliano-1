@@ -21,6 +21,7 @@ namespace SotosWoodwork.Models
         public virtual string Pes_telefone2 { get; set; }
         public virtual string Pes_cep { get; set; }
         public virtual bool Pes_situacao { get; set; }                
+        public virtual decimal Pes_salario { get; set; }
     }
 
     public class Sts_pessoaMap : ClassMap<Sts_pessoa>
@@ -44,6 +45,7 @@ namespace SotosWoodwork.Models
             Map(x => x.Pes_telefone2);
             Map(x => x.Pes_cep);
             Map(x => x.Pes_situacao);
+            Map(x => x.Pes_salario);
 
             Table("sts_pessoa");
         }

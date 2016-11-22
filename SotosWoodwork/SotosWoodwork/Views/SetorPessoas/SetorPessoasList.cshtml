@@ -76,6 +76,7 @@
                                                     <i ng-show="sortType === 'Pes_razaosocial' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                                 </a>
                                             </th>
+                                            <th class="col-button-header">Excluir</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,6 +86,11 @@
                                         <tr ng-repeat="Sts_pessoa in pessoasSetorList| orderBy:sortType:sortReverse | filter:search">
                                             <td><input type="checkbox" id="chkColaboradorSetor{{Sts_pessoa.Pes_razaosocial}}" ng-model="Sts_pessoa.marcado"><label for="chkColaboradorSetor{{Sts_pessoa.Pes_razaosocial}}"></label></td>
                                             <td>{{Sts_pessoa.Pes_razaosocial}}</td>
+                                            <td class="text-center">
+                                                <a ng-click="delete(Sts_pessoa);">
+                                                    <i class="material-icons col-pink">remove_circle</i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
