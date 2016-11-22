@@ -4,6 +4,7 @@ namespace SotosWoodwork.Models
 {
     public class Sts_cor
     {
+        //c
         public virtual int Cor_codigo { get; set; }
         public virtual string Cor_descricao { get; set; }
         public virtual string Cor_codigocor { get; set; }
