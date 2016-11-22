@@ -3435,6 +3435,8 @@
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaquinaController.cs" />
+    <Compile Include="Controllers\OrcamentoController.cs" />
+    <Compile Include="Controllers\OrcamentoProdutosController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
@@ -3444,14 +3446,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Sts_cidade.cs" />
+    <Compile Include="Models\Sts_cor.cs" />
     <Compile Include="Models\Sts_grupo.cs" />
     <Compile Include="Models\Sts_log.cs" />
     <Compile Include="Models\Sts_maquina.cs" />
+    <Compile Include="Models\Sts_orcamento.cs" />
+    <Compile Include="Models\Sts_orcamentoprodutos.cs" />
     <Compile Include="Models\Sts_ordemcompra.cs" />
     <Compile Include="Models\Sts_ordemcompraprodutos.cs" />
     <Compile Include="Models\Sts_pessoa.cs" />
     <Compile Include="Models\Sts_processosprodutivos.cs" />
     <Compile Include="Models\Sts_produto.cs" />
+    <Compile Include="Models\Sts_produtomateriais.cs" />
     <Compile Include="Models\Sts_produtoprocessos.cs" />
     <Compile Include="Models\Sts_setor.cs" />
     <Compile Include="Models\Sts_setorpessoas.cs" />
@@ -3682,6 +3688,11 @@
     <Content Include="Views\Produto\MateriaPrimaList.cshtml" />
     <Content Include="Views\Produto\MateriaPrimaForm.cshtml" />
     <Content Include="Views\SetorPessoas\SetorPessoasList.cshtml" />
+    <Content Include="Views\Cor\CorForm.cshtml" />
+    <Content Include="Views\Cor\CorList.cshtml" />
+    <Content Include="Views\ProdutoMateriais\ProdutoMateriaisList.cshtml" />
+    <Content Include="Views\Orcamento\OrcamentoList.cshtml" />
+    <Content Include="Views\Orcamento\OrcamentoForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3693,6 +3704,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cidade\" />
     <Folder Include="Views\MateriaPrima\" />
+    <Folder Include="Views\OrcamentoProdutos\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

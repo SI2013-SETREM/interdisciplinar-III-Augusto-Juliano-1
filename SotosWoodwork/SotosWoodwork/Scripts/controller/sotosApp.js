@@ -115,16 +115,16 @@ app.config(function ($routeProvider, $locationProvider) {
         controller: 'produtoController',
     })
     .when('/Produto', {
-            templateUrl: '/Produto/ProdutoList',
-            controller: 'produtoController',
+        templateUrl: '/Produto/ProdutoList',
+        controller: 'produtoController',
     })
     .when('/EditarProduto', {
-            templateUrl: '/Produto/ProdutoForm',
-            controller: 'produtoController',
+        templateUrl: '/Produto/ProdutoForm',
+        controller: 'produtoController',
     })
     .when('/AdicionarProduto', {
-            templateUrl: '/Produto/ProdutoForm',
-            controller: 'produtoController',
+        templateUrl: '/Produto/ProdutoForm',
+        controller: 'produtoController',
     })
     .when('/EditarSetorPessoas', {
         templateUrl: '/SetorPessoas/SetorPessoasList',
@@ -133,6 +133,19 @@ app.config(function ($routeProvider, $locationProvider) {
     .when('/EditarProdutoMateriais', {
         templateUrl: '/ProdutoMateriais/ProdutoMateriaisList',
         controller: 'produtoMateriaisController',
+    })
+
+    .when('/Orcamento', {
+        templateUrl: '/Orcamento/OrcamentoList',
+        controller: 'orcamentoController',
+    })
+    .when('/EditarOrcamento', {
+        templateUrl: '/Orcamento/OrcamentoForm',
+        controller: 'orcamentoController',
+    })
+    .when('/AdicionarOrcamento', {
+        templateUrl: '/Orcamento/OrcamentoForm',
+        controller: 'orcamentoController',
     })
     .otherwise({ redirectTo: '/' });
 });
@@ -701,7 +714,6 @@ app.controller("setorPessoasController", function ($scope, $http, $routeParams, 
     };
 
     $scope.save = function () {
-        debugger;
         $http({
             method: "POST",
             url: window.location.origin + "/SetorPessoas/Save",
