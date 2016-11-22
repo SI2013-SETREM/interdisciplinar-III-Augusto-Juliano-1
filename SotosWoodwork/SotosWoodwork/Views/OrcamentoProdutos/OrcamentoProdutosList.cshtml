@@ -1,0 +1,172 @@
+﻿<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Orçamento
+                </h2>
+            </div>
+            <div class="body">
+                <form role="form" name="form">
+                    <label for="Orc_data">Data<strong class="text-danger">*</strong></label>
+                    <div class="form-group">
+                        <div class="form-line disabled">
+                            <input type="date" class="form-control" ng-model="Sts_orcamento.Orc_data" id="Orc_data" ng-model-options="{ timezone: '+0300' }" required disabled>
+                        </div>
+                    </div>
+
+                    <label for="Orc_numeropedido">Número do Pedido</label>
+                    <div class="form-group">
+                        <div class="form-line disabled">
+                            <input type="number" class="form-control" ng-model="Sts_orcamento.Orc_numeropedido" id="Orc_numeropedido" disabled>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" id="formOrdemProdutos">
+            <div class="header">
+                <h2>
+                    Produtos do Orçamento
+                </h2>
+            </div>
+            <div class="body">
+                <form role="form" name="form"  ng-submit="save(Sts_orcamentoprodutos);">
+                    <input class="form-control hidden" value="{{Sts_orcamento.Orc_codigo}}" ng-model="Sts_orcamentoprodutos.Sts_orcamento.Orc_codigo" id="orc_codigo">
+                    <input class="form-control hidden" value="0" ng-model="Sts_orcamentoprodutos.Ocp_codigo" id="ocp_codigo">
+
+                    <label for="Pro_codigo">Produto<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <select id="Pro_codigo" class="form-control" ng-model="Sts_orcamentoprodutos.Sts_produto" ng-options="Sts_produto.Pro_descricao for Sts_produto in produtosList track by Sts_produto.Pro_codigo" required></select>
+                        </div>
+                    </div>
+
+                    <label for="Ocp_quantidade">Quantidade<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <input type="number" class="form-control" ng-model="Sts_orcamentoprodutos.Ocp_quantidade" id="Ocp_quantidade" required>
+                        </div>
+                    </div>
+
+                    <label for="Ocp_valorunit">Valor Unitário<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <input type="number" step="0.01" class="form-control" ng-model="Sts_orcamentoprodutos.Ocp_valorunit" id="Ocp_valorunit" required>
+                        </div>
+                    </div>
+
+                    <label for="Ocp_dataentrega">Data de Entrega</label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <input type="date" class="form-control" ng-model="Sts_orcamentoprodutos.Ocp_dataentrega" id="Ocp_dataentrega" ng-model-options="{ timezone: '+0300' }">
+                        </div>
+                    </div>
+                    <button type="button" ng-click="new();" class="btn btn-primary m-t-15 waves-effect">Novo</button>
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
+                    <a class="btn btn-default m-t-15 waves-effect" href="#Orcamento">Cancelar</a>
+                </form>
+            </div>
+            <div class="header">
+                <h2>
+                    Listagem de Orçamentos
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row form-horizontal">
+                    <div class="col-lg-11">
+                        <div class="input-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" placeholder="Pesquisar" ng-model="search">
+                            </div>
+                            <span class="input-group-addon">
+                                <i class="material-icons">search</i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 text-right">
+                        <div class="btn btn-primary" ng-click="loadOrcamentoProdutosList()">
+                            <i class="material-icons">refresh</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <a ng-click="sortType = 'Pro_descricao';sortReverse = !sortReverse">
+                                                Produto
+                                                <i ng-show="sortType === 'Pro_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pro_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Ocp_quantidade';sortReverse = !sortReverse">
+                                                Quantidade
+                                                <i ng-show="sortType === 'Ocp_quantidade' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Ocp_quantidade' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Ocp_valorunit';sortReverse = !sortReverse">
+                                                Valor Unitário (R$)
+                                                <i ng-show="sortType === 'Ocp_valorunit' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Ocp_valorunit' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Ocp_dataentrega';sortReverse = !sortReverse">
+                                                Data de Entrega
+                                                <i ng-show="sortType === 'Ocp_dataentrega' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Ocp_dataentrega' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th class="col-button-header">Editar</th>
+                                        <th class="col-button-header">Excluir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="orcamentoProdutosList.length === 0 && http.pendingRequests.length == 0">
+                                        <td colspan="1000">Nenhum registro encontrado :(</td>
+                                    </tr>
+                                    <tr ng-repeat="Sts_orcamentoprodutos in orcamentoProdutosList| orderBy:sortType:sortReverse | filter:search">
+                                        <td>{{Sts_orcamentoprodutos.Sts_produto.Pro_descricao}}</td>
+                                        <td>{{Sts_orcamentoprodutos.Ocp_quantidade}}</td>
+                                        <td>{{Sts_orcamentoprodutos.Ocp_valorunit}}</td>
+                                        <td>{{Sts_orcamentoprodutos.Ocp_dataentrega| date : 'dd/MM/yyyy' : '+0300'}}</td>
+                                        <td class="text-center">
+                                            <a ng-click="edit(Sts_orcamentoprodutos);">
+                                                <i class="material-icons col-blue">assignment</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a ng-click="delete(Sts_orcamentoprodutos);">
+                                                <i class="material-icons col-pink">remove_circle</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $.AdminBSB.browser.activate();
+        $.AdminBSB.leftSideBar.activate();
+        $.AdminBSB.rightSideBar.activate();
+        $.AdminBSB.navbar.activate();
+        $.AdminBSB.dropdownMenu.activate();
+        $.AdminBSB.input.activate();
+        $.AdminBSB.select.activate();
+        $.AdminBSB.search.activate();
+    });
+</script>

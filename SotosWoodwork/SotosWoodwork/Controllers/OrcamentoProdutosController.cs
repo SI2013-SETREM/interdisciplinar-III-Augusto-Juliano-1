@@ -11,24 +11,25 @@ namespace SotosWoodwork.Controllers
 {
     public class OrcamentoProdutosController : Controller
     {
-        public ActionResult OrcamentoList()
+        public ActionResult OrcamentoProdutosList()
         {
             return View();
         }
 
-        public ActionResult OrcamentoForm()
+        public ActionResult OrcamentoProdutosForm()
         {
             return View();
         }
 
 
         [HttpGet]
-        public string FindAll()
+        public string FindAllProductsOrder(int id)
         {
             using (RepositoryBase repository = new RepositoryBase())
             {
-                IList<Sts_orcamentoprodutos> listSts_orcamento = repository.ToList<Sts_orcamentoprodutos>();
-                return JsonConvert.SerializeObject(listSts_orcamento);
+                IList<Sts_orcamentoprodutos> list = repository.ToList<Sts_orcamentoprodutos>()
+                    .Where(x => x.Sts_orcamento.Orc_codigo == id).ToList();
+                return JsonConvert.SerializeObject(list);
             }
         }
 

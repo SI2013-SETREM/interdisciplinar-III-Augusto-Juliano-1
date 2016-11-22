@@ -9,26 +9,54 @@
             <div class="body">
                 <form role="form" name="form" ng-submit="save(Sts_orcamento);">
                     <input class="form-control hidden" value="0" ng-model="Sts_orcamento.Orc_codigo" id="orc_codigo">
-                    <!-- continuar daqui -->
+                    
                     <label for="Orc_data">Data<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <input class="form-control" ng-model="Sts_orcamento.Orc_data" id="Orc_data" required>
+                            <input type="date" class="form-control" ng-model="Sts_orcamento.Orc_data" id="Orc_data" ng-model-options="{ timezone: '+0300' }" required>
                         </div>
                     </div>
 
-                    <label for="Set_produtivo">Tipo de Setor<strong class="text-danger">*</strong></label>
+                    <label for="Orc_numeropedido">Número do Pedido</label>
+                    <div class="form-group ">
+                        <div class="form-line">
+                            <input type="number" class="form-control" ng-model="Sts_orcamento.Orc_numeropedido" id="Orc_numeropedido">
+                        </div>
+                    </div>
+
+                    <label for="Orc_formapagamento">Forma de Pagamento<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <select id="set_produtivo" class="form-control show-tick" ng-model="Sts_orcamento.Set_produtivo" required convert-to-bool>
-                                <option value="true">Produtivo</option>
-                                <option value="false">Não Produtivo</option>
+                            <input type="text" class="form-control" ng-model="Sts_orcamento.Orc_formapagamento" id="Orc_formapagamento" required>
+                        </div>
+                    </div>
+
+                    <label for="Orc_desconto">Desconto</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="number" class="form-control" ng-model="Sts_orcamento.Orc_desconto" id="Orc_desconto">
+                        </div>
+                    </div>
+
+                    <label for="Orc_situacao">Situação<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <select id="pes_situacao" class="form-control show-tick" ng-model="Sts_orcamento.Orc_situacao" required convert-to-bool>
+                                <option value="true">Ativo</option>
+                                <option value="false">Inativo</option>
                             </select>
                         </div>
                     </div>
 
+                    <label for="Orc_dataentrega">Data de Entrega</label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <input type="date" class="form-control" ng-model="Sts_orcamento.Orc_dataentrega" id="Orc_dataentrega" ng-model-options="{ timezone: '+0300' }" required>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
-                    <a class="btn btn-default m-t-15 waves-effect" href="#Setor">Cancelar</a>
+                    <a class="btn btn-default m-t-15 waves-effect" href="#Orcamento">Cancelar</a>
                 </form>
             </div>
         </div>

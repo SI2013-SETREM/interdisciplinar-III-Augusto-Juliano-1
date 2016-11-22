@@ -135,8 +135,8 @@ app.config(function ($routeProvider, $locationProvider) {
         controller: 'produtoMateriaisController',
     })
     .when('/EditarProdutoProcessos', {
-                templateUrl: '/ProdutoProcessos/ProdutoProcessosList',
-                controller: 'produtoProcessosController',
+        templateUrl: '/ProdutoProcessos/ProdutoProcessosList',
+        controller: 'produtoProcessosController',
     })
     .when('/Orcamento', {
         templateUrl: '/Orcamento/OrcamentoList',
@@ -149,6 +149,10 @@ app.config(function ($routeProvider, $locationProvider) {
     .when('/AdicionarOrcamento', {
         templateUrl: '/Orcamento/OrcamentoForm',
         controller: 'orcamentoController',
+    })
+    .when('/EditarOrcamentoProdutos', {
+        templateUrl: '/OrcamentoProdutos/OrcamentoProdutosList',
+        controller: 'orcamentoProdutosController',
     })
     .otherwise({ redirectTo: '/' });
 });
@@ -717,7 +721,6 @@ app.controller("setorPessoasController", function ($scope, $http, $routeParams, 
     };
 
     $scope.save = function () {
-        debugger;
         $http({
             method: "POST",
             url: window.location.origin + "/SetorPessoas/Save",
@@ -881,7 +884,6 @@ app.controller("produtoProcessosController", function ($scope, $http, $routePara
     };
 
     $scope.saveProcessos = function (Sts_produtoprocessos) {
-        debugger;
         $http({
             method: "GET",
             url: window.location.origin + "/ProdutoProcessos/Save",
@@ -898,4 +900,143 @@ app.controller("produtoProcessosController", function ($scope, $http, $routePara
     $scope.loadSts_produto();
     $scope.loadMaquinasList();
     $scope.loadSetorPessoasList();
+});
+
+app.controller("orcamentoController", function ($scope, $http, $routeParams, $location) {
+    $scope.orcamentosList = [];
+    $scope.sortType = "Orc_data";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_orcamento = {};
+    
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Orcamento/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_orcamento = response.data;
+            $scope.Sts_orcamento.Orc_data = new Date($scope.Sts_orcamento.Orc_data);
+            $scope.Sts_orcamento.Orc_dataentrega = new Date($scope.Sts_orcamento.Orc_dataentrega);
+        });
+    }    
+
+    $scope.loadOrcamentosList = function () {
+        $http.get(window.location.origin + "/Orcamento/FindAll", { method: "GET" }).then(function (response) {
+            $scope.orcamentosList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_unidademedida) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/Orcamento/Delete",
+                    params: {
+                        id: Sts_orcamento.Orc_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadOrcamentosList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_orcamento) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/Orcamento/Save",
+            params: {
+                json: Sts_orcamento
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_orcamento.Orc_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#Orcamento';
+            });
+        });
+    };
+
+    $scope.loadOrcamentosList();
+});
+
+app.controller("orcamentoProdutosController", function ($scope, $http, $routeParams, $location) {
+    $scope.orcamentoProdutosList = [];
+    $scope.produtosList = [];
+    $scope.sortType = "Pro_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_orcamento = {};
+    $scope.Sts_orcamentoprodutos = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/Orcamento/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_orcamento = response.data;
+            $scope.Sts_orcamento.Orc_data = new Date($scope.Sts_orcamento.Orc_data);
+        });
+    }
+
+    $scope.loadOrcamentoProdutosList = function () {
+        $http.get(window.location.origin + "/OrcamentoProdutos/FindAllProductsOrder", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.orcamentoProdutosList = response.data;
+        });
+    };
+
+    $scope.loadProdutosList = function () {
+        $http.get(window.location.origin + "/Produto/FindAllProdutos", { method: "GET" }).then(function (response) {
+            $scope.produtosList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_orcamentoprodutos) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/OrcamentoProdutos/Delete",
+                    params: {
+                        id: Sts_orcamentoprodutos.Ocp_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadOrcamentoProdutosList();
+                        $scope.loadProdutosList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.edit = function (Sts_orcamentoprodutos) {
+        Sts_orcamentoprodutos.Ocp_dataentrega = new Date(Sts_orcamentoprodutos.Ocp_dataentrega);
+        $scope.Sts_orcamentoprodutos = Sts_orcamentoprodutos;
+        debugger;
+        $('html, body').animate({
+            scrollTop: $("#formOrdemProdutos").offset().top - $('html, body').offset().top + $('html, body').scrollTop()
+        }, 1000);
+    };
+    $scope.new = function () {
+        $scope.Sts_orcamentoprodutos = {};
+    };
+
+    $scope.save = function (Sts_orcamentoprodutos) {
+        Sts_orcamentoprodutos.Sts_orcamento = $scope.Sts_orcamento;
+        $http({
+            method: "GET",
+            url: window.location.origin + "/OrcamentoProdutos/Save",
+            params: {
+                json: Sts_orcamentoprodutos
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_orcamentoprodutos.Ocp_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                $scope.loadOrcamentoProdutosList();
+                $scope.loadProdutosList();
+                $scope.Sts_orcamentoprodutos = {};
+            });
+        });
+    };
+
+    $scope.loadOrcamentoProdutosList();
+    $scope.loadProdutosList();
 });

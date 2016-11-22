@@ -84,12 +84,12 @@
                                         <td colspan="1000">Nenhum registro encontrado :(</td>
                                     </tr>
                                     <tr ng-repeat="Sts_orcamento in orcamentosList| orderBy:sortType:sortReverse | filter:search">
-                                        <td>{{Sts_orcamento.Orc_data}}</td>
+                                        <td>{{Sts_orcamento.Orc_data| date : 'dd/MM/yyyy' : '+0300'}}</td>
                                         <td>{{Sts_orcamento.Orc_numeropedido}}</td>
                                         <td>{{Sts_orcamento.Orc_formapagamento}}</td>
                                         <td>{{Sts_orcamento.Orc_desconto}}</td>
-                                        <td>{{Sts_orcamento.Orc_situacao}}</td>
-                                        <td>{{Sts_orcamento.Orc_dataentrega}}</td>
+                                        <td>{{Sts_orcamento.Orc_situacao == true ? 'Ativo' : 'Inativo'}}</td>
+                                        <td>{{Sts_orcamento.Orc_dataentrega| date : 'dd/MM/yyyy' : '+0300'}}</td>
                                         <td class="text-center">
                                             <a href="#EditarOrcamentoProdutos?id={{Sts_orcamento.Orc_codigo}}" ng-click="$scope.model = Sts_orcamento;">
                                                 <i class="material-icons col-blue">assignment</i>

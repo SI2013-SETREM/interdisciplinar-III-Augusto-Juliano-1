@@ -3436,6 +3436,8 @@
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaquinaController.cs" />
+    <Compile Include="Controllers\OrcamentoController.cs" />
+    <Compile Include="Controllers\OrcamentoProdutosController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\ProdutoMateriaisController.cs" />
@@ -3451,6 +3453,8 @@
     <Compile Include="Models\Sts_grupo.cs" />
     <Compile Include="Models\Sts_log.cs" />
     <Compile Include="Models\Sts_maquina.cs" />
+    <Compile Include="Models\Sts_orcamento.cs" />
+    <Compile Include="Models\Sts_orcamentoprodutos.cs" />
     <Compile Include="Models\Sts_ordemcompra.cs" />
     <Compile Include="Models\Sts_ordemcompraprodutos.cs" />
     <Compile Include="Models\Sts_pessoa.cs" />
@@ -3693,6 +3697,9 @@
     <Content Include="Views\Cor\CorList.cshtml" />
     <Content Include="Views\ProdutoMateriais\ProdutoMateriaisList.cshtml" />
     <Content Include="Views\ProdutoProcessos\ProdutoProcessosList.cshtml" />
+    <Content Include="Views\Orcamento\OrcamentoForm.cshtml" />
+    <Content Include="Views\Orcamento\OrcamentoList.cshtml" />
+    <Content Include="Views\OrcamentoProdutos\OrcamentoProdutosList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3703,6 +3710,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cidade\" />
+    <Folder Include="Views\MateriaPrima\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
