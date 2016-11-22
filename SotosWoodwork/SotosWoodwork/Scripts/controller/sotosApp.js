@@ -138,6 +138,18 @@ app.config(function ($routeProvider, $locationProvider) {
                 templateUrl: '/ProdutoProcessos/ProdutoProcessosList',
                 controller: 'produtoProcessosController',
     })
+    .when('/Orcamento', {
+        templateUrl: '/Orcamento/OrcamentoList',
+        controller: 'orcamentoController',
+    })
+    .when('/EditarOrcamento', {
+        templateUrl: '/Orcamento/OrcamentoForm',
+        controller: 'orcamentoController',
+    })
+    .when('/AdicionarOrcamento', {
+        templateUrl: '/Orcamento/OrcamentoForm',
+        controller: 'orcamentoController',
+    })
     .otherwise({ redirectTo: '/' });
 });
 
