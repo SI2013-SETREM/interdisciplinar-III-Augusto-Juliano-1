@@ -222,6 +222,7 @@
     <Content Include="Scripts\js\admin.js" />
     <Content Include="Scripts\js\demo.js" />
     <Content Include="Scripts\js\helpers.js" />
+    <Content Include="Scripts\js\jspdf.min.js" />
     <Content Include="Scripts\js\pages\cards\basic.js" />
     <Content Include="Scripts\js\pages\cards\colored.js" />
     <Content Include="Scripts\js\pages\charts\chartjs.js" />
