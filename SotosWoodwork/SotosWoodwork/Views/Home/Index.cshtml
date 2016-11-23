@@ -121,19 +121,6 @@
                                 <span>Início</span>
                             </a>
                         </li>
-                        <li ng-click="activetab = 'clientes';" ng-class="{'active' : activetab === 'clientes'}">
-                            <a href="#Pessoa">
-                                <i class="material-icons">assignment_ind</i>
-                                <span>Clientes</span>
-                            </a>
-                        </li>
-                        <li ng-click="activetab = 'fornecedores';" ng-class="{'active' : activetab === 'fornecedores'}">
-                            <a href="#Fornecedor">
-                                <i class="material-icons">people</i>
-                                <span>Fornecedores</span>
-                            </a>
-                        </li>
-                        <li role="seperator" class="divider"></li>
                         <li ng-click="activetab = 'produtos';" ng-class="{'active' : activetab === 'produtos'}">
                             <a href="#Produto">
                                 <i class="material-icons">event_seat</i>
@@ -146,7 +133,6 @@
                                 <span>Matérias Primas</span>
                             </a>
                         </li>
-                        <li role="seperator" class="divider"></li>
                         <li ng-click="activetab = 'orcamento';" ng-class="{'active' : activetab === 'orcamento'}">
                             <a href="#Orcamento">
                                 <i class="material-icons">assignment</i>
@@ -154,7 +140,7 @@
                             </a>
                         </li>
                         <li ng-click="activetab = 'ordemproducao';" ng-class="{'active' : activetab === 'ordemproducao'}">
-                            <a href="#">
+                            <a href="#OrdemProducao">
                                 <i class="material-icons">insert_chart</i>
                                 <span>Ordem de Produção</span>
                             </a>
@@ -191,10 +177,22 @@
                                 <span>Cadastros Gerais</span>
                             </a>
                             <ul class="ml-menu">
+                                <li ng-click="activetab = 'clientes';" ng-class="{'active' : activetab === 'clientes'}">
+                                    <a href="#Pessoa">
+                                        <i class="material-icons">assignment_ind</i>
+                                        <span>Clientes</span>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="#Cor">
                                         <i class="material-icons">palette</i>
                                         <span>Cores</span>
+                                    </a>
+                                </li>
+                                <li ng-click="activetab = 'fornecedores';" ng-class="{'active' : activetab === 'fornecedores'}">
+                                    <a href="#Fornecedor">
+                                        <i class="material-icons">people</i>
+                                        <span>Fornecedores</span>
                                     </a>
                                 </li>
                                 <li ng-click="activetab = 'FormaPagamento';" ng-class="{'active' : activetab === 'FormaPagamento'}">
@@ -247,10 +245,10 @@
 
     <!-- Angular Core Js -->
     <script src="~/Scripts/plugins/angular/angular.js"></script>
-    
+
     <!-- Angular Route Core Js -->
     <script src="~/Scripts/plugins/angular-route/angular-route.min.js"></script>
-    
+
     <!-- Slimscroll Plugin Js -->
     <script src="~/Scripts/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
@@ -295,15 +293,15 @@
     <script src="~/Scripts/js/html2canvas.js"></script>
 
     <!--
-        
+
         var doc = new jsPDF();
         var htmlText = '';
         $.get('/Orcamento/OrcamentoHtml?id=1', function (data) {htmlText = data});
         doc.fromHTML(htmlText);
         doc.save('aaaa.pdf');
-    
-        
-        
+
+
+
         -->
 </body>
 </html>

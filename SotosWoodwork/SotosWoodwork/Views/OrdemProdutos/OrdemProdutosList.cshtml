@@ -1,0 +1,184 @@
+﻿<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div id="cabecalho" class="card" style="height: 115px; !important">
+                <div style="float: left; margin: 20px 10px 10px 10px">
+                    <img src="~/Content/images/logomarca.png" />
+                </div>
+                <div>
+                    <br />
+                    <span>Indústria de Móveis Eckert Ltda</span><br />
+                    <span>Av. São José, 441 - Centro</span><br />
+                    <span>Boa Vista do Buricá/RS - 989180-000</span><br />
+                    <span>+55 (55) 3538-1447</span>
+                </div>
+            </div>
+            <div class="header">
+                <h2>
+                    Ordem de Produção de Nº {{Sts_ordemproducao.Ord_codigo}}
+                </h2>
+            </div>
+            <div id="corpoES" class="body">
+                <form role="form" name="form">
+                    <label for="Ord_datacadastro">Data de Cadastro<strong class="text-danger">*</strong></label>
+                    <div class="form-group">
+                        <div class="form-line disabled">
+                            <input type="date" class="form-control" ng-model="Sts_ordemproducao.Ord_datacadastro" id="Ord_datacadastro" ng-model-options="{ timezone: '+0300' }" required disabled>
+                        </div>
+                    </div>
+
+                    <label for="Orc_codigo">Orçamento</label>
+                    <div class="form-group">
+                        <div class="form-line disabled">
+                            <input class="form-control" ng-model="Sts_ordemproducao.Sts_orcamento.Orc_codigo" id="Orc_codigo" disabled>
+                        </div>
+                    </div>
+
+                    <label for="Pes_razaosocial">Cliente</label>
+                    <div class="form-group">
+                        <div class="form-line disabled">
+                            <input class="form-control" ng-model="Sts_ordemproducao.Sts_orcamento.Sts_pessoa.Pes_razaosocial" id="Pes_razaosocial" disabled>
+                        </div>
+                    </div>
+
+                    <label for="Ord_dataentrega">Data de Entrega<strong class="text-danger">*</strong></label>
+                    <div class="form-group">
+                        <div class="form-line disabled">
+                            <input type="date" class="form-control" ng-model="Sts_ordemproducao.Ord_dataentrega" id="Ord_dataentrega" ng-model-options="{ timezone: '+0300' }" required disabled>
+                        </div>
+                    </div>
+                    <a class="btn btn-info m-t-15 waves-effect" href="javascript:printOrcamento()">Imprimir O. P.</a>
+                </form>
+            </div>
+        </div>
+        <div class="card" id="formOrdemProdutos">
+            <div class="header">
+                <h2>
+                    Produtos da Ordem de Produção
+                </h2>
+            </div>
+            <div class="body">
+                <form role="form" name="form" ng-submit="save(Sts_ordemprodutos);">
+                    <input class="form-control hidden" value="{{Sts_ordemproducao.Ord_codigo}}" ng-model="Sts_ordemprodutos.Sts_ordemproducao.Ord_codigo" id="ord_codigo">
+                    <input class="form-control hidden" value="0" ng-model="Sts_ordemprodutos.Odp_codigo" id="odp_codigo">
+
+                    <label for="Pro_codigo">Produto<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <select id="Pro_codigo" class="form-control" ng-model="Sts_ordemprodutos.Sts_produto" ng-options="Sts_produto.Pro_descricao for Sts_produto in produtosList track by Sts_produto.Pro_codigo" required></select>
+                        </div>
+                    </div>
+
+                    <label for="Odp_quantidade">Quantidade<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <input type="number" class="form-control" ng-model="Sts_ordemprodutos.Odp_quantidade" id="Odp_quantidade" required>
+                        </div>
+                    </div>
+
+                    <button type="button" ng-click="new();" class="btn btn-primary m-t-15 waves-effect">Novo</button>
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
+                </form>
+            </div>
+            <div class="header">
+                <h2>
+                    Listagem de Itens da O. P.
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row form-horizontal">
+                    <div class="col-lg-11">
+                        <div class="input-group">
+                            <div class="form-line">
+                                <input type="text" class="form-control" placeholder="Pesquisar" ng-model="search">
+                            </div>
+                            <span class="input-group-addon">
+                                <i class="material-icons">search</i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 text-right">
+                        <div class="btn btn-primary" ng-click="loadOrdemProdutosList()">
+                            <i class="material-icons">refresh</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <a ng-click="sortType = 'Pro_descricao';sortReverse = !sortReverse">
+                                                Produto
+                                                <i ng-show="sortType === 'Pro_descricao' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pro_descricao' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Odp_quantidade';sortReverse = !sortReverse">
+                                                Quantidade
+                                                <i ng-show="sortType === 'Odp_quantidade' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Odp_quantidade' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a ng-click="sortType = 'Odp_produzido';sortReverse = !sortReverse">
+                                                Produzido?
+                                                <i ng-show="sortType === 'Odp_produzido' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Odp_produzido' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th class="col-button-header">Baixar O. P.</th>
+                                        <th class="col-button-header">Editar</th>
+                                        <th class="col-button-header">Excluir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="ordemProdutosList.length === 0 && http.pendingRequests.length == 0">
+                                        <td colspan="1000">Nenhum registro encontrado :(</td>
+                                    </tr>
+                                    <tr ng-repeat="Sts_ordemprodutos in ordemProdutosList | orderBy:sortType:sortReverse | filter:search">
+                                        <td>{{Sts_ordemprodutos.Sts_produto.Pro_descricao}}</td>
+                                        <td>{{Sts_ordemprodutos.Odp_quantidade}}</td>
+                                        <td>{{Sts_ordemprodutos.Odp_produzido == true ? 'Sim' : 'Em produção'}}</td>
+                                        <td class="text-center">
+                                            <a ng-click="baixarOP(Sts_ordemprodutos);">
+                                                <i class="material-icons col-blue">done</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a ng-click="edit(Sts_ordemprodutos);">
+                                                <i class="material-icons col-blue">assignment</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a ng-click="delete(Sts_ordemprodutos);">
+                                                <i class="material-icons col-pink">remove_circle</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a class="btn btn-default m-t-15 waves-effect" href="#OrdemProducao">Voltar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $.AdminBSB.browser.activate();
+        $.AdminBSB.leftSideBar.activate();
+        $.AdminBSB.rightSideBar.activate();
+        $.AdminBSB.navbar.activate();
+        $.AdminBSB.dropdownMenu.activate();
+        $.AdminBSB.input.activate();
+        $.AdminBSB.select.activate();
+        $.AdminBSB.search.activate();
+    });
+</script>

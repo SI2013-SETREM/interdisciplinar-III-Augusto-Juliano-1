@@ -166,6 +166,26 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/OrcamentoProdutos/OrcamentoProdutosList',
         controller: 'orcamentoProdutosController',
     })
+    .when('/EditarOrdemProdutos', {
+        templateUrl: '/OrdemProdutos/OrdemProdutosList',
+        controller: 'ordemProdutosController',
+    })
+    .when('/OrdemProducao', {
+        templateUrl: '/OrdemProducao/OrdemProducaoList',
+        controller: 'ordemProducaoController',
+    })
+    .when('/EditarOrdemProducao', {
+        templateUrl: '/OrdemProducao/OrdemProducaoForm',
+        controller: 'ordemProducaoController',
+    })
+    .when('/AdicionarOrdemProducao', {
+        templateUrl: '/OrdemProducao/OrdemProducaoForm',
+        controller: 'ordemProducaoController',
+    })
+    .when('/Estoque', {
+        templateUrl: '/Estoque/EstoqueList',
+        controller: 'estoqueController',
+    })
     .otherwise({ redirectTo: '/' });
 });
 
@@ -959,7 +979,7 @@ app.controller("produtoProcessosController", function ($scope, $http, $routePara
                 json: Sts_produtoprocessos
             }
         }).then(function (response) {
-            bootbox.alert("Arerererere Inter vai jogar a serie B!! Registro " + (Sts_produtoprocessos.Ppc_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+            bootbox.alert("! Registro " + (Sts_produtoprocessos.Ppc_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
                 document.location.href = '#EditarProdutoProcessos?id=' + $routeParams.id;
             });
         });
@@ -1007,7 +1027,7 @@ app.controller("orcamentoController", function ($scope, $http, $routeParams, $lo
         });
     };
 
-    $scope.delete = function (Sts_unidademedida) {
+    $scope.delete = function (Sts_orcamento) {
         bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
             if (ok) {
                 $http({
@@ -1147,4 +1167,200 @@ app.controller("orcamentoProdutosController", function ($scope, $http, $routePar
 
     $scope.loadOrcamentoProdutosList();
     $scope.loadProdutosList();
+});
+
+app.controller("ordemProducaoController", function ($scope, $http, $routeParams, $location) {
+    $scope.ordensProducaoList = [];
+    $scope.orcamentosList = [];
+    $scope.sortType = "Ord_codigo";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_ordemproducao = {};
+
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/OrdemProducao/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_ordemproducao = response.data;
+            $scope.Sts_ordemproducao.Ord_datacadastro = new Date($scope.Sts_ordemproducao.Ord_datacadastro);
+            $scope.Sts_ordemproducao.Ord_dataentrega = new Date($scope.Sts_ordemproducao.Ord_dataentrega);
+        });
+    }
+
+    $scope.loadOrcamentosList = function () {
+        $http.get(window.location.origin + "/Orcamento/FindAll", { method: "GET" }).then(function (response) {
+            $scope.orcamentosList = response.data;
+        });
+    };
+
+    $scope.loadOrdensProducaoList = function () {
+        $http.get(window.location.origin + "/OrdemProducao/FindAll", { method: "GET" }).then(function (response) {
+            $scope.ordensProducaoList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_ordemproducao) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/OrdemProducao/Delete",
+                    params: {
+                        id: Sts_ordemproducao.Ord_codigo
+                    }
+                }).then(function (response) {
+                    if (response != null && response.data != "Erro" && response.data != "Produzida") {
+                        bootbox.alert("Registro excluído com Sucesso!", function () {
+                            $scope.loadOrdensProducaoList();
+                        });
+                    } else if (response != null && response.data == "Produzida") {
+                        bootbox.alert("A ordem de produção não pode ser cancelada pois a mesma já foi produzida!", function () {
+                            $scope.loadOrdensProducaoList();
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_ordemproducao) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/OrdemProducao/Save",
+            params: {
+                json: Sts_ordemproducao
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_ordemproducao.Ord_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#OrdemProducao';
+            });
+        });
+    };
+
+    $scope.loadOrdensProducaoList();
+    $scope.loadOrcamentosList;
+});
+
+app.controller("ordemProdutosController", function ($scope, $http, $routeParams, $location) {
+    $scope.ordemProdutosList = [];
+    $scope.produtosList = [];
+    $scope.sortType = "Odp_codigo";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_ordemproducao = {};
+    $scope.Sts_ordemprodutos = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/OrdemProducao/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_ordemproducao = response.data;
+            $scope.Sts_ordemproducao.Ord_datacadastro = new Date($scope.Sts_ordemproducao.Ord_datacadastro);
+            $scope.Sts_ordemproducao.Ord_dataentrega = new Date($scope.Sts_ordemproducao.Ord_dataentrega);
+        });
+    }
+
+    $scope.loadOrdemProdutosList = function () {
+        $http.get(window.location.origin + "/OrdemProdutos/FindAllProductsOrder", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.ordemProdutosList = response.data;
+        });
+    };
+
+    $scope.loadProdutosList = function () {
+        $http.get(window.location.origin + "/Produto/FindAllProdutos", { method: "GET" }).then(function (response) {
+            $scope.produtosList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_ordemprodutos) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/OrdemProdutos/Delete",
+                    params: {
+                        id: Sts_ordemprodutos.Odp_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadOrdemProdutosList();
+                        $scope.loadProdutosList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.edit = function (Sts_ordemprodutos) {
+        Sts_ordemprodutos.Odp_dataentrega = new Date(Sts_ordemprodutos.Odp_dataentrega);
+        $scope.Sts_ordemprodutos = Sts_ordemprodutos;
+        $('html, body').animate({
+            scrollTop: $("#formOrdemProdutos").offset().top - $('html, body').offset().top + $('html, body').scrollTop()
+        }, 1000);
+    };
+    $scope.new = function () {
+        $scope.Sts_ordemprodutos = {};
+    };
+
+    $scope.save = function (Sts_ordemprodutos) {
+        Sts_ordemprodutos.Sts_ordemproducao = $scope.Sts_ordemproducao;
+        $http({
+            method: "GET",
+            url: window.location.origin + "/OrdemProdutos/Save",
+            params: {
+                json: Sts_ordemprodutos
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_ordemprodutos.Odp_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                $scope.loadOrdemProdutosList();
+                $scope.loadProdutosList();
+                $scope.Sts_ordemprodutos = {};
+            });
+        });
+    };
+
+    $scope.baixarOP = function (Sts_ordemprodutos) {
+        bootbox.confirm("Deseja encerrar a O. P. e liberar o produto para estoque?", function (ok) {
+            Sts_ordemprodutos.Sts_ordemproducao = $scope.Sts_ordemproducao;
+            $http({
+                method: "GET",
+                url: window.location.origin + "/OrdemProdutos/baixarOP",
+                params: {
+                    id: Sts_ordemprodutos.Odp_codigo
+                }
+            }).then(function (response) {
+                if (response != null && response.data != "Erro") {
+                    bootbox.alert("Item da O. P. encerrado e liberado para o estoque!", function () {
+                        $scope.loadOrdemProdutosList();
+                        $scope.loadProdutosList();
+                        $scope.Sts_ordemprodutos = {};
+                    });
+                } else {
+                    bootbox.alert("A ordem de produção não pode ser encerrada, verifique os dados da O.P.!", function () {
+
+                    });
+                }
+            });
+        });
+    }
+
+    $scope.loadOrdemProdutosList();
+    $scope.loadProdutosList();
+});
+
+app.controller("estoqueController", function ($scope, $http, $routeParams, $location) {
+    $scope.estoquesList = [];
+    $scope.sortType = "Pro_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_estoque = {};
+
+    $scope.loadEstoquesList = function () {
+        $http.get(window.location.origin + "/Estoque/FindAll", { method: "GET" }).then(function (response) {
+            $scope.estoquesList = response.data;
+        });
+    };
+
+
+    $scope.loadEstoquesList();
 });

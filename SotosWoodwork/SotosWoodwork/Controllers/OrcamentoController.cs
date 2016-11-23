@@ -80,6 +80,22 @@ namespace SotosWoodwork.Controllers
                             sts_ordemprodutos.Sts_produto = list[i].Sts_produto;
                             sts_ordemprodutos.Odp_produzido = false;
                             repository.Save(sts_ordemprodutos);
+
+                            IList<Sts_produtomateriais> listMateriais = repository.ToList<Sts_produtomateriais>().Where(x => x.Sts_produto.Pro_codigo == list[i].Sts_produto.Pro_codigo).ToList();
+                            //JOGA NO ESTOQUE AS NECESSIDADES DE MATERIA PRIMA
+                            for (int x = 0; x < listMateriais.Count; x++)
+                            {
+                                Sts_estoque sts_estoque = new Sts_estoque();
+                                sts_estoque.Est_codigo = 0;
+                                sts_estoque.Est_dataregistro = DateTime.Now;
+                                sts_estoque.Est_quantidade = listMateriais[x].Pmp_quantidade * sts_ordemprodutos.Odp_quantidade;
+                                sts_estoque.Sts_ordemprodutos = sts_ordemprodutos;
+                                sts_estoque.Sts_produto = listMateriais[x].Sts_materiaprima;
+                                sts_estoque.Est_tipo = "S";
+                                sts_estoque.Sts_ordemcompraprodutos = null;
+
+                                repository.Save(sts_estoque);
+                            }
                         }
                         sts_orcamento.Orc_situacao = "A";
                         repository.Save(sts_orcamento);

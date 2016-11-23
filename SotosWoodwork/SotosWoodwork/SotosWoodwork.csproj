@@ -3434,12 +3434,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CidadeController.cs" />
     <Compile Include="Controllers\CorController.cs" />
+    <Compile Include="Controllers\EstoqueController.cs" />
     <Compile Include="Controllers\FormaPagamentoController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaquinaController.cs" />
     <Compile Include="Controllers\OrcamentoController.cs" />
     <Compile Include="Controllers\OrcamentoProdutosController.cs" />
+    <Compile Include="Controllers\OrdemProducaoController.cs" />
+    <Compile Include="Controllers\OrdemProdutosController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\ProdutoMateriaisController.cs" />
@@ -3452,6 +3455,7 @@
     </Compile>
     <Compile Include="Models\Sts_cidade.cs" />
     <Compile Include="Models\Sts_cor.cs" />
+    <Compile Include="Models\Sts_estoque.cs" />
     <Compile Include="Models\Sts_formapagamento.cs" />
     <Compile Include="Models\Sts_grupo.cs" />
     <Compile Include="Models\Sts_log.cs" />
@@ -3707,6 +3711,10 @@
     <Content Include="Views\OrcamentoProdutos\OrcamentoProdutosList.cshtml" />
     <Content Include="Views\FormaPagamento\FormaPagamentoList.cshtml" />
     <Content Include="Views\FormaPagamento\FormaPagamentoForm.cshtml" />
+    <Content Include="Views\OrdemProducao\OrdemProducaoList.cshtml" />
+    <Content Include="Views\OrdemProducao\OrdemProducaoForm.cshtml" />
+    <Content Include="Views\OrdemProdutos\OrdemProdutosList.cshtml" />
+    <Content Include="Views\Estoque\EstoqueList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
