@@ -22,6 +22,15 @@ namespace SotosWoodwork.Controllers
             return View();
         }
 
+        public ActionResult OrcamentoHtml(int id)
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                Sts_orcamento sts_orcamento = (Sts_orcamento)repository.GetById(typeof(Sts_orcamento), id);
+                return View(sts_orcamento);
+            }
+        }
+
 
         [HttpGet]
         public string FindAll()

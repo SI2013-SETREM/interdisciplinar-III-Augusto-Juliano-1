@@ -16,6 +16,7 @@ namespace SotosWoodwork.Models
         public virtual decimal Orc_desconto { get; set; }
         public virtual string Orc_situacao { get; set; }
         public virtual DateTime Orc_dataentrega { get; set; }
+        public virtual IList<Sts_orcamentoprodutos> ListSts_orcamentoprodutos { get; set; }
     }
 
     public class Sts_orcamentoMap : ClassMap<Sts_orcamento>
@@ -30,6 +31,7 @@ namespace SotosWoodwork.Models
             Map(x => x.Orc_desconto);
             Map(x => x.Orc_situacao);
             Map(x => x.Orc_dataentrega);
+            HasMany(x => x.ListSts_orcamentoprodutos).Not.LazyLoad();
 
             Table("sts_orcamento");
         }

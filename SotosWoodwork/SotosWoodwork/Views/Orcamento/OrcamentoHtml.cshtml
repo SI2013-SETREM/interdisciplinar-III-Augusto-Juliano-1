@@ -7,13 +7,42 @@
     <title>Orcamento</title>
     <style>
         @@page {
-           size: A4;
-           margin: 10px;
-           font-family: Tahoma;
+            size: A4;
+            margin: 10px;
+            font-family: Tahoma;
+        }
+        table{
+            width: calc(100% - 20px);
         }
     </style>
 </head>
 <body>
+    <table cellpadding="0" cellspacing="0" style="border: solid 1px black; ">
+        <tr>
+            <td style="border-right: solid 1px black; width: 100px;"></td>
+            <td style="text-align: center;"><h1>ORÇAMENTO</h1></td>
+            <td style="border-left: solid 1px black; width: 100px;">
+
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" style="">
+        <tr>
+            <td style="">Cliente: @Model.Sts_pessoa.Pes_razaosocial;</td>
+            <td></td>
+            <td style="border-right: solid 1px black; width: 100px;"></td>
+        </tr>
+        <tr>
+            <td style="width: 100px;"></td>
+            <td></td>
+            <td style="width: 100px;"></td>
+        </tr>
+        <tr>
+            <td style="border-right: solid 1px black; width: 100px;"></td>
+            <td><h1>ORÇAMENTO</h1></td>
+            <td style="border-right: solid 1px black; width: 100px;"></td>
+        </tr>
+    </table>
     <table cellpadding="0" cellspacing="0" style="border: solid 1px; ">
         <thead>
             <tr>
@@ -25,11 +54,11 @@
         <tbody>
             @foreach (var orcamento in Model.ListSts_orcamentoprodutos)
             {
-                <tr>
-                    <td style="border-top: solid 1px black; border-right: solid 1px black;">@orcamento.Ocp_codigo</td>
-                    <td style="border-top: solid 1px black; border-right: solid 1px black;">@orcamento.Ocp_quantidade</td>
-                    <td style="border-top: solid 1px black;">@orcamento.Ocp_valorunit</td>
-                </tr>
+            <tr>
+                <td style="border-top: solid 1px black; border-right: solid 1px black;">@orcamento.Ocp_codigo</td>
+                <td style="border-top: solid 1px black; border-right: solid 1px black;">@orcamento.Ocp_quantidade</td>
+                <td style="border-top: solid 1px black;">@orcamento.Ocp_valorunit</td>
+            </tr>
             }
         </tbody>
     </table>
