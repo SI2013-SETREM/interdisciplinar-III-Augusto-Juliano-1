@@ -1,0 +1,37 @@
+﻿@model SotosWoodwork.Models.Sts_orcamento
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Orcamento</title>
+    <style>
+        @@page {
+           size: A4;
+           margin: 10px;
+           font-family: Tahoma;
+        }
+    </style>
+</head>
+<body>
+    <table cellpadding="0" cellspacing="0" style="border: solid 1px; ">
+        <thead>
+            <tr>
+                <th style="border-bottom: solid 1px black; border-right: solid 1px black;">Codigo</th>
+                <th style="border-bottom: solid 1px black; border-right: solid 1px black;">Quantidade</th>
+                <th style="border-bottom: solid 1px black;">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orcamento in Model.ListSts_orcamentoprodutos)
+            {
+                <tr>
+                    <td style="border-top: solid 1px black; border-right: solid 1px black;">@orcamento.Ocp_codigo</td>
+                    <td style="border-top: solid 1px black; border-right: solid 1px black;">@orcamento.Ocp_quantidade</td>
+                    <td style="border-top: solid 1px black;">@orcamento.Ocp_valorunit</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

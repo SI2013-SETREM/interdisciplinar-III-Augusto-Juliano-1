@@ -47,6 +47,10 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
       <Private>True</Private>
@@ -70,6 +74,14 @@
     </Reference>
     <Reference Include="Npgsql, Version=3.1.8.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.3.1.8\lib\net451\Npgsql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Pechkin, Version=0.5.8.1, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\Pechkin.0.5.8.1\lib\net40\Pechkin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Pechkin.Synchronized, Version=0.5.8.1, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\Pechkin.Synchronized.0.5.8.1\lib\net40\Pechkin.Synchronized.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
@@ -218,6 +230,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="libeay32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libgcc_s_dw2-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mingwm10.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\controller\sotosApp.js" />
     <Content Include="Scripts\js\admin.js" />
     <Content Include="Scripts\js\demo.js" />
@@ -3189,6 +3210,8 @@
     <Content Include="Scripts\plugins\jquery-validation\localization\methods_pt.js" />
     <Content Include="Scripts\plugins\jquery\jquery.js" />
     <Content Include="Scripts\plugins\jquery\jquery.min.js" />
+    <Content Include="Scripts\plugins\jsPDF\jspdf.debug.js" />
+    <Content Include="Scripts\plugins\jsPDF\jspdf.min.js" />
     <Content Include="Scripts\plugins\jvectormap\jquery-jvectormap-1.2.2.css" />
     <Content Include="Scripts\plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
     <Content Include="Scripts\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
@@ -3426,7 +3449,13 @@
     <Content Include="Scripts\plugins\waitme\waitMe.js" />
     <Content Include="Scripts\plugins\waitme\waitMe.min.css" />
     <Content Include="Scripts\plugins\waitme\waitMe.min.js" />
+    <Content Include="ssleay32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
+    <Content Include="wkhtmltox0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -3469,6 +3498,7 @@
     <Compile Include="Repository\DataBase.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Utils\HtmlToPdf.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -3700,6 +3730,7 @@
     <Content Include="Views\Orcamento\OrcamentoForm.cshtml" />
     <Content Include="Views\Orcamento\OrcamentoList.cshtml" />
     <Content Include="Views\OrcamentoProdutos\OrcamentoProdutosList.cshtml" />
+    <Content Include="Views\Orcamento\OrcamentoHtml.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -241,12 +241,10 @@
 
     <!-- Angular Core Js -->
     <script src="~/Scripts/plugins/angular/angular.js"></script>
-
+    
     <!-- Angular Route Core Js -->
     <script src="~/Scripts/plugins/angular-route/angular-route.min.js"></script>
-
-    <!-- Select Plugin Js
-    <script src="~/Scripts/plugins/bootstrap-select/js/bootstrap-select.js"></script>-->
+    
     <!-- Slimscroll Plugin Js -->
     <script src="~/Scripts/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
@@ -271,6 +269,9 @@
     <!-- Waves Effect Plugin Js -->
     <script src="~/Scripts/plugins/node-waves/waves.js"></script>
 
+    <!-- jsPDF Core Js -->
+    <script src="~/Scripts/plugins/jsPDF/jspdf.min.js"></script>
+
     <!-- Bootbox Core Js -->
     <script src="~/Scripts/plugins/bootbox/bootbox.min.js"></script>
 
@@ -283,14 +284,16 @@
     <!-- Demo Js -->
     <script src="~/Scripts/js/demo.js"></script>
 
-    <!--<script>
-        $(function () {
-            $('.menu .list').click(function (e) {
-                $('.menu .list li').removeClass('active');
-                $(e.target).parentsUntil('ul').addClass('active');
-            });
-        });
-    </script>-->
-
+    <!--
+        
+        var doc = new jsPDF();
+        var htmlText = '';
+        $.get('/Orcamento/OrcamentoHtml?id=1', function (data) {htmlText = data});
+        doc.fromHTML(htmlText);
+        doc.save('aaaa.pdf');
+    
+        
+        
+        -->
 </body>
 </html>

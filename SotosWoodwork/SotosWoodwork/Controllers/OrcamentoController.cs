@@ -1,8 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Pechkin;
+using Pechkin.Synchronized;
 using SotosWoodwork.Models;
 using SotosWoodwork.Repository;
+using SotosWoodwork.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +23,22 @@ namespace SotosWoodwork.Controllers
         public ActionResult OrcamentoForm()
         {
             return View();
+        }
+
+        public ActionResult OrcamentoHtml(int id)
+        {
+            using (RepositoryBase repository = new RepositoryBase())
+            {
+                Sts_orcamento sts_orcamento = (Sts_orcamento)repository.GetById(typeof(Sts_orcamento), id);
+                return View(sts_orcamento);
+            }
+            
+        }
+
+        public FileContentResult OrcamentoPdf(int id)
+        {
+            
+            return new HtmlToPdf().Execute(Request, "#/Orcamento", "Orcamento");
         }
 
 
