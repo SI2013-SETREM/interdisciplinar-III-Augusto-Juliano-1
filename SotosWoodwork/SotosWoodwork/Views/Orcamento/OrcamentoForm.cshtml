@@ -9,11 +9,18 @@
             <div class="body">
                 <form role="form" name="form" ng-submit="save(Sts_orcamento);">
                     <input class="form-control hidden" value="0" ng-model="Sts_orcamento.Orc_codigo" id="orc_codigo">
-                    
-                    <label for="Orc_data">Data<strong class="text-danger">*</strong></label>
+
+                    <label for="Orc_data">Data de Venda<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
                             <input type="date" class="form-control" ng-model="Sts_orcamento.Orc_data" id="Orc_data" ng-model-options="{ timezone: '+0300' }" required>
+                        </div>
+                    </div>
+
+                    <label for="Pes_codigo">Cliente<strong class="text-danger">*</strong></label>
+                    <div class="form-group required">
+                        <div class="form-line">
+                            <select id="Pes_codigo" class="form-control" ng-model="Sts_orcamento.Sts_pessoa" ng-options="Sts_pessoa.Pes_razaosocial for Sts_pessoa in pessoasList track by Sts_pessoa.Pes_codigo" required></select>
                         </div>
                     </div>
 
@@ -24,10 +31,10 @@
                         </div>
                     </div>
 
-                    <label for="Orc_formapagamento">Forma de Pagamento<strong class="text-danger">*</strong></label>
+                    <label for="Frp_codigo">Método de Pagamento<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <input type="text" class="form-control" ng-model="Sts_orcamento.Orc_formapagamento" id="Orc_formapagamento" required>
+                            <select id="Frp_codigo" class="form-control" ng-model="Sts_orcamento.Sts_formapagamento" ng-options="Sts_formapagamento.Frp_descricao + ' | ' + Sts_formapagamento.Frp_desconto + '% de desconto' for Sts_formapagamento in formaspagamentoList track by Sts_formapagamento.Frp_codigo" required></select>
                         </div>
                     </div>
 
@@ -41,14 +48,14 @@
                     <label for="Orc_situacao">Situação<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
-                            <select id="pes_situacao" class="form-control show-tick" ng-model="Sts_orcamento.Orc_situacao" required convert-to-bool>
-                                <option value="true">Ativo</option>
-                                <option value="false">Inativo</option>
+                            <select id="pes_situacao" class="form-control show-tick" ng-model="Sts_orcamento.Orc_situacao" required>
+                                <option value="E">Em aberto</option>
+                                <option value="C">Cancelado</option>
                             </select>
                         </div>
                     </div>
 
-                    <label for="Orc_dataentrega">Data de Entrega</label>
+                    <label for="Orc_dataentrega">Data de Entrega<strong class="text-danger">*</strong></label>
                     <div class="form-group required">
                         <div class="form-line">
                             <input type="date" class="form-control" ng-model="Sts_orcamento.Orc_dataentrega" id="Orc_dataentrega" ng-model-options="{ timezone: '+0300' }" required>
@@ -65,6 +72,16 @@
 
 <script>
     $(function () {
+        $("#Frp_codigo").blur(function () {
+            if ($("#Frp_codigo").val() > 0) {
+                var desconto = $("#Frp_codigo :selected").text();
+                var position = desconto.indexOf("%");
+                var positionIni = position - 2;
+                var desconto = desconto.substring(positionIni, position);
+                var descontoReal = Number(desconto);
+                $("#Orc_desconto").val(descontoReal);
+            }
+        });
         $.AdminBSB.browser.activate();
         $.AdminBSB.leftSideBar.activate();
         $.AdminBSB.rightSideBar.activate();

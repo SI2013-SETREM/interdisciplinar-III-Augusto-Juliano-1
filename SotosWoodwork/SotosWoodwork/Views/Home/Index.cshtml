@@ -28,11 +28,10 @@
     <!-- Bootstrap Select Css -->
     <link href="~/Scripts/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
-    <!-- Materialize Css 
+    <!-- Materialize Css
     <link href="~/Content/css/materialize.css" rel="stylesheet" />
     <link href="~/Scripts/plugins/materialize-css/css/materialize.css" rel="stylesheet" />
         -->
-
     <!-- Custom Css -->
     <link href="~/Content/css/style.css" rel="stylesheet">
 
@@ -134,6 +133,7 @@
                                 <span>Fornecedores</span>
                             </a>
                         </li>
+                        <li role="seperator" class="divider"></li>
                         <li ng-click="activetab = 'produtos';" ng-class="{'active' : activetab === 'produtos'}">
                             <a href="#Produto">
                                 <i class="material-icons">event_seat</i>
@@ -142,10 +142,11 @@
                         </li>
                         <li ng-click="activetab = 'materiaprima';" ng-class="{'active' : activetab === 'materiaprima'}">
                             <a href="#MateriaPrima">
-                                <i class="material-icons">rowing</i>
+                                <i class="material-icons">style</i>
                                 <span>Matérias Primas</span>
                             </a>
                         </li>
+                        <li role="seperator" class="divider"></li>
                         <li ng-click="activetab = 'orcamento';" ng-class="{'active' : activetab === 'orcamento'}">
                             <a href="#Orcamento">
                                 <i class="material-icons">assignment</i>
@@ -154,7 +155,7 @@
                         </li>
                         <li ng-click="activetab = 'ordemproducao';" ng-class="{'active' : activetab === 'ordemproducao'}">
                             <a href="#">
-                                <i class="material-icons">gavel</i>
+                                <i class="material-icons">insert_chart</i>
                                 <span>Ordem de Produção</span>
                             </a>
                         </li>
@@ -196,6 +197,12 @@
                                         <span>Cores</span>
                                     </a>
                                 </li>
+                                <li ng-click="activetab = 'FormaPagamento';" ng-class="{'active' : activetab === 'FormaPagamento'}">
+                                    <a href="#FormaPagamento">
+                                        <i class="material-icons">payment</i>
+                                        <span>Métodos de Pagamento</span>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="#Grupo">
                                         <i class="material-icons">group</i>
@@ -209,7 +216,6 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
                     </ul>
                 </div>
                 <!-- #Menu -->

@@ -33,6 +33,13 @@
                                 <thead>
                                     <tr>
                                         <th>
+                                            <a ng-click="sortType = 'Orc_codigo';sortReverse = !sortReverse">
+                                                Código
+                                                <i ng-show="sortType === 'Orc_codigo' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Orc_codigo' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            </a>
+                                        </th>
+                                        <th>
                                             <a ng-click="sortType = 'Orc_data';sortReverse = !sortReverse">
                                                 Data
                                                 <i ng-show="sortType === 'Orc_data' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
@@ -40,10 +47,10 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a ng-click="sortType = 'Orc_numeropedido';sortReverse = !sortReverse">
-                                                Número do Pedido
-                                                <i ng-show="sortType === 'Orc_numeropedido' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
-                                                <i ng-show="sortType === 'Orc_numeropedido' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
+                                            <a ng-click="sortType = 'Pes_razaosocial';sortReverse = !sortReverse">
+                                                Cliente
+                                                <i ng-show="sortType === 'Pes_razaosocial' && !sortReverse" class="material-icons md-18">arrow_drop_down</i>
+                                                <i ng-show="sortType === 'Pes_razaosocial' && sortReverse" class="material-icons md-18">arrow_drop_up</i>
                                             </a>
                                         </th>
                                         <th>
@@ -77,6 +84,8 @@
                                         <th>Produtos</th>
                                         <th class="col-button-header">Editar</th>
                                         <th class="col-button-header">Excluir</th>
+                                        <th class="col-button-header">Imprimir</th>
+                                        <th class="col-button-header">Gerar O. P.</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,11 +93,12 @@
                                         <td colspan="1000">Nenhum registro encontrado :(</td>
                                     </tr>
                                     <tr ng-repeat="Sts_orcamento in orcamentosList| orderBy:sortType:sortReverse | filter:search">
+                                        <td>{{Sts_orcamento.Orc_codigo}}</td>
                                         <td>{{Sts_orcamento.Orc_data| date : 'dd/MM/yyyy' : '+0300'}}</td>
-                                        <td>{{Sts_orcamento.Orc_numeropedido}}</td>
-                                        <td>{{Sts_orcamento.Orc_formapagamento}}</td>
-                                        <td>{{Sts_orcamento.Orc_desconto}}</td>
-                                        <td>{{Sts_orcamento.Orc_situacao == true ? 'Ativo' : 'Inativo'}}</td>
+                                        <td>{{Sts_orcamento.Sts_pessoa.Pes_razaosocial}}</td>
+                                        <td>{{Sts_orcamento.Sts_formapagamento.Frp_descricao}}</td>
+                                        <td>{{Sts_orcamento.Orc_desconto + '%'}}</td>
+                                        <td>{{Sts_orcamento.Orc_situacao == 'A' ? 'Enviado p/ Produção' : Sts_orcamento.Orc_situacao == 'E' ? 'Em aberto' : 'Cancelado'}}</td>
                                         <td>{{Sts_orcamento.Orc_dataentrega| date : 'dd/MM/yyyy' : '+0300'}}</td>
                                         <td class="text-center">
                                             <a href="#EditarOrcamentoProdutos?id={{Sts_orcamento.Orc_codigo}}" ng-click="$scope.model = Sts_orcamento;">
@@ -103,6 +113,16 @@
                                         <td class="text-center">
                                             <a ng-click="delete(Sts_orcamento);">
                                                 <i class="material-icons col-pink">remove_circle</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a ng-click="printOrcamento(Sts_orcamento);">
+                                                <i class="material-icons col-green">print</i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a ng-click="gerarOP(Sts_orcamento);">
+                                                <i class="material-icons col-green">insert_chart</i>
                                             </a>
                                         </td>
                                     </tr>

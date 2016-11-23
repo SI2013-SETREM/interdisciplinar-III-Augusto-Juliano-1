@@ -39,7 +39,7 @@
                             <label for="Ppc_tempoproducao">Tempo Estimado da Operação</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="time" step="1" class="form-control" ng-model="Sts_produtoprocessos.Ppc_tempoproducao" id="Ppc_tempoproducao">
+                                    <input type="time" step="1" class="form-control" ng-model="Sts_produtoprocessos.Ppc_tempoproducao" ng-model-options="{ timezone: '+0300' }" id="Ppc_tempoproducao">
                                 </div>
                             </div>
                             <div class="row">

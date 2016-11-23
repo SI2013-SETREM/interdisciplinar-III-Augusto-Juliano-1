@@ -66,6 +66,18 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: '/Grupo/GrupoForm',
         controller: 'grupoController',
     })
+    .when('/FormaPagamento', {
+        templateUrl: '/FormaPagamento/FormaPagamentoList',
+        controller: 'formaPagamentoController',
+    })
+    .when('/EditarFormaPagamento', {
+        templateUrl: '/FormaPagamento/FormaPagamentoForm',
+        controller: 'formaPagamentoController',
+    })
+    .when('/AdicionarFormaPagamento', {
+        templateUrl: '/FormaPagamento/FormaPagamentoForm',
+        controller: 'formaPagamentoController',
+    })
     .when('/Cor', {
         templateUrl: '/Cor/CorList',
         controller: 'corController',
@@ -424,6 +436,62 @@ app.controller("maquinaController", function ($scope, $http, $routeParams, $loca
 
     $scope.loadMaquinasList();
     $scope.loadSetoresList();
+});
+
+app.controller("formaPagamentoController", function ($scope, $http, $routeParams, $location) {
+    $scope.formaspagamentoList = [];
+    $scope.sortType = "Frp_descricao";
+    $scope.sortReverse = false;
+    $scope.search = "";
+    $scope.http = $http;
+    $scope.Sts_formapagamento = {};
+
+    if ($routeParams.id) {
+        $http.get(window.location.origin + "/FormaPagamento/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
+            $scope.Sts_formapagamento = response.data;
+        });
+    }
+
+    $scope.loadFormasPagamentoList = function () {
+        $http.get(window.location.origin + "/FormaPagamento/FindAll", { method: "GET" }).then(function (response) {
+            $scope.formaspagamentoList = response.data;
+        });
+    };
+
+    $scope.delete = function (Sts_formapagamento) {
+        bootbox.confirm("Deseja realmente excluir o registro?", function (ok) {
+
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/FormaPagamento/Delete",
+                    params: {
+                        id: Sts_formapagamento.Frp_codigo
+                    }
+                }).then(function (response) {
+                    bootbox.alert("Registro excluído com Sucesso!", function () {
+                        $scope.loadFormasPagamentoList();
+                    });
+                });
+            }
+        });
+    };
+
+    $scope.save = function (Sts_formapagamento) {
+        $http({
+            method: "GET",
+            url: window.location.origin + "/FormaPagamento/Save",
+            params: {
+                json: Sts_formapagamento
+            }
+        }).then(function (response) {
+            bootbox.alert("Registro " + (Sts_formapagamento.Frp_codigo === undefined ? "inserido" : "alterado") + " com Sucesso!", function () {
+                document.location.href = '#FormaPagamento';
+            });
+        });
+    };
+
+    $scope.loadFormasPagamentoList();
 });
 
 app.controller("grupoController", function ($scope, $http, $routeParams, $location) {
@@ -904,12 +972,14 @@ app.controller("produtoProcessosController", function ($scope, $http, $routePara
 
 app.controller("orcamentoController", function ($scope, $http, $routeParams, $location) {
     $scope.orcamentosList = [];
+    $scope.pessoasList = [];
+    $scope.formaspagamentoList = [];
     $scope.sortType = "Orc_data";
     $scope.sortReverse = false;
     $scope.search = "";
     $scope.http = $http;
     $scope.Sts_orcamento = {};
-    
+
 
     if ($routeParams.id) {
         $http.get(window.location.origin + "/Orcamento/GetById", { method: "GET", params: { id: $routeParams.id } }).then(function (response) {
@@ -917,7 +987,19 @@ app.controller("orcamentoController", function ($scope, $http, $routeParams, $lo
             $scope.Sts_orcamento.Orc_data = new Date($scope.Sts_orcamento.Orc_data);
             $scope.Sts_orcamento.Orc_dataentrega = new Date($scope.Sts_orcamento.Orc_dataentrega);
         });
-    }    
+    }
+
+    $scope.loadPessoasList = function () {
+        $http.get(window.location.origin + "/Pessoa/FindAllClient", { method: "GET" }).then(function (response) {
+            $scope.pessoasList = response.data;
+        });
+    };
+
+    $scope.loadFormasPagamentoList = function () {
+        $http.get(window.location.origin + "/FormaPagamento/FindAll", { method: "GET" }).then(function (response) {
+            $scope.formaspagamentoList = response.data;
+        });
+    };
 
     $scope.loadOrcamentosList = function () {
         $http.get(window.location.origin + "/Orcamento/FindAll", { method: "GET" }).then(function (response) {
@@ -943,6 +1025,30 @@ app.controller("orcamentoController", function ($scope, $http, $routeParams, $lo
         });
     };
 
+    $scope.gerarOP = function (Sts_orcamento) {
+        bootbox.confirm("Deseja realmente gerar um Ordem de Produção para o Orçamento selecionado?", function (ok) {
+            if (ok) {
+                $http({
+                    method: "GET",
+                    url: window.location.origin + "/Orcamento/gerarOP",
+                    params: {
+                        id: Sts_orcamento.Orc_codigo
+                    }
+                }).then(function (response) {
+                    if (response != null && response.data != "Erro") {
+                        bootbox.alert("Ordem de Produção gerada com sucesso!", function () {
+                            document.location.href = '#OrdemProducao';
+                        });
+                    } else {
+                        bootbox.alert("A ordem de produção não pode ser gerada, verifique os dados do orçamento!", function () {
+                            document.location.href = '#Orcamento';
+                        });
+                    }
+                });
+            }
+        });
+    };
+
     $scope.save = function (Sts_orcamento) {
         $http({
             method: "GET",
@@ -958,6 +1064,8 @@ app.controller("orcamentoController", function ($scope, $http, $routeParams, $lo
     };
 
     $scope.loadOrcamentosList();
+    $scope.loadPessoasList();
+    $scope.loadFormasPagamentoList();
 });
 
 app.controller("orcamentoProdutosController", function ($scope, $http, $routeParams, $location) {
